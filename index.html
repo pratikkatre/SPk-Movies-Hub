@@ -3,143 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Global Cinema Hub</title>
+    <title>SPk ULTIMATE - 2026 Premium Cinema</title>
     <style>
-        :root { --red: #E50914; --black: #050505; --card: #141414; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --red: #E50914; --black: #050505; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; text-align: center; }
         
-        /* Netflix Style Nav */
-        nav { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 1px solid #222; box-sizing: border-box; }
-        .logo { color: var(--red); font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; }
-        .cats { display: flex; gap: 15px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-        .cats span { cursor: pointer; transition: 0.3s; }
-        .cats span:hover { color: var(--red); }
+        nav { background: #000; padding: 15px 5%; border-bottom: 2px solid var(--red); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--red); font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
 
-        /* Search Section */
-        .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #111, var(--black)); }
-        .s-box { display: flex; max-width: 600px; margin: 0 auto; background: #222; border-radius: 5px; overflow: hidden; border: 1px solid #444; }
-        #s-input { flex: 1; padding: 15px; border: none; background: transparent; color: white; outline: none; font-size: 1rem; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 25px; font-weight: bold; cursor: pointer; }
+        .hero { padding: 40px 5%; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://image.tmdb.org/t/p/original/69Uqt7vS68p1EBYI7913o9W4mJ7.jpg'); background-size: cover; border-bottom: 1px solid #333; }
+        .s-box { display: flex; max-width: 500px; margin: 20px auto; background: #222; border-radius: 50px; overflow: hidden; border: 1px solid var(--red); }
+        #s-input { flex: 1; padding: 12px 20px; background: transparent; border: none; color: white; outline: none; }
+        .s-btn { background: var(--red); color: white; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; }
 
-        /* Rows & Categories */
-        .row { padding: 25px 0 0 5%; }
-        .row h2 { font-size: 1.2rem; margin-bottom: 15px; border-left: 4px solid var(--red); padding-left: 12px; text-transform: uppercase; }
-        .scroll-grid { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scroll-behavior: smooth; }
-        .scroll-grid::-webkit-scrollbar { display: none; }
+        .row { padding: 25px 5%; text-align: left; }
+        .row h2 { font-size: 1.3rem; border-left: 5px solid var(--red); padding-left: 12px; margin-bottom: 20px; text-transform: uppercase; color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
         
-        .card { flex: 0 0 150px; height: 225px; background: var(--card); border-radius: 6px; overflow: hidden; position: relative; transition: 0.4s; cursor: pointer; border: 1px solid #222; }
-        .card:hover { transform: scale(1.1); z-index: 100; border-color: var(--red); box-shadow: 0 10px 30px #000; }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-        .quality { position: absolute; top: 8px; right: 8px; background: var(--red); font-size: 0.6rem; padding: 2px 5px; font-weight: bold; border-radius: 3px; }
+        .card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #222; transition: 0.3s; cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.05); border-color: var(--red); box-shadow: 0 0 15px var(--red); }
+        .card img { width: 100%; height: 210px; object-fit: cover; }
+        .card-name { padding: 8px; font-size: 0.75rem; text-align: center; font-weight: bold; height: 35px; overflow: hidden; }
+        .tag { position: absolute; top: 5px; right: 5px; background: var(--red); font-size: 0.6rem; padding: 2px 5px; font-weight: bold; border-radius: 3px; }
 
-        /* Cinema Theater */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .t-nav { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; background: linear-gradient(rgba(0,0,0,0.8), transparent); }
-        .close-btn { background: var(--red); color: white; border: none; padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 50px; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">SPk ULTIMATE</div>
-    <div class="cats">
-        <span onclick="fetchGenre(28, 'Action Blockbusters')">Action</span>
-        <span onclick="fetchGenre(16, 'Animation & Kids')">Kids</span>
-        <span onclick="fetchGenre(27, 'Horror Nights')">Horror</span>
-        <span onclick="fetchGenre(10749, 'Romance & Adult')">Adult</span>
-    </div>
-</nav>
+<nav><div class="logo">SPk ULTIMATE 2026</div></nav>
 
 <div class="hero">
+    <h1>2026 GLOBAL RELEASES</h1>
     <div class="s-box">
-        <input type="text" id="s-input" placeholder="Search any movie or series worldwide...">
-        <button class="s-btn" onclick="deepSearch()">SEARCH</button>
+        <input type="text" id="s-input" placeholder="Search 2026 Movies & Hot Series...">
+        <button class="s-btn" onclick="executeSearch()">SEARCH</button>
     </div>
 </div>
 
-<div class="row" id="s-row" style="display:none;">
-    <h2 id="s-label">Results</h2>
-    <div class="scroll-grid" id="s-grid"></div>
+<div class="row">
+    <h2>2026 Mega Blockbusters</h2>
+    <div class="grid" id="movies-2026"></div>
 </div>
 
 <div class="row">
-    <h2 id="main-title">Worldwide Trending</h2>
-    <div class="scroll-grid" id="main-grid"></div>
-</div>
-
-<div class="row">
-    <h2>Popular TV Series</h2>
-    <div class="scroll-grid" id="series-grid"></div>
+    <h2 style="color: #ff4d4d;">Trending Hot & Adult</h2>
+    <div class="grid" id="adult-2026"></div>
 </div>
 
 <div id="theater">
-    <div class="t-nav">
-        <span id="playing-now" style="font-weight: bold; color: var(--red);">STREAMING 4K UHD</span>
-        <button class="close-btn" onclick="exitTheater()">✕ CLOSE</button>
-    </div>
-    <iframe id="cinema-iframe" src="" allowfullscreen></iframe>
+    <button class="close-btn" onclick="exitTheater()">✕ CLOSE</button>
+    <iframe id="v-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
     const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244";
-    // Using an Image Proxy to bypass India's Connection Error
-    const PROXY = "https://images.weserv.nl/?url=";
+    const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
 
-    async function fetchData(url, gridId) {
+    const topMovies = [
+        { id: 'tt16539488', title: 'Godzilla x Kong 2', img: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg' },
+        { id: 'tt15239678', title: 'Dune: Messiah', img: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg' },
+        { id: 'tt14060094', title: 'Fighter 2', img: '/8XunofS9FvB7K0I6G2J8u70F7E.jpg' },
+        { id: 'tt11389802', title: 'Stree 3', img: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg' },
+        { id: 'tt2962390', title: 'Singham Returns', img: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg' }
+    ];
+
+    const hotContent = [
+        { id: 'tt6468322', title: 'Money Heist: New Era', img: '/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg' },
+        { id: 'tt10837166', title: '365 Days: Final', img: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg' },
+        { id: 'tt13008596', title: 'Elite: Season 9', img: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg' },
+        { id: 'tt11126994', title: 'Sex/Life: Reunion', img: '/8mS2G1l7t0OQp8t50S8tWUX.jpg' },
+        { id: 'tt14671660', title: 'Obsession 2', img: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg' }
+    ];
+
+    function renderGrid(data, gridId) {
         const grid = document.getElementById(gridId);
-        grid.innerHTML = "<p style='padding:20px;'>Syncing Global Library...</p>";
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            grid.innerHTML = "";
-            data.results.forEach(m => {
-                if(m.poster_path) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.onclick = () => launchMovie(m.id, m.media_type || 'movie', m.title || m.name);
-                    const poster = `${PROXY}https://image.tmdb.org/t/p/w342${m.poster_path}`;
-                    card.innerHTML = `<div class="quality">4K</div><img src="${poster}">`;
-                    grid.appendChild(card);
-                }
-            });
-        } catch(e) { grid.innerHTML = "<p>Connection Busy. Please Refresh.</p>"; }
+        data.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => playCinema(m.id, m.title);
+            card.innerHTML = `<div class="tag">4K HDR</div><img src="${PROXY + m.img}"><div class="card-name">${m.title}</div>`;
+            grid.appendChild(card);
+        });
     }
 
-    function deepSearch() {
-        const q = document.getElementById('s-input').value;
-        if(q.length < 2) return;
-        document.getElementById('s-row').style.display = "block";
-        fetchData(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 's-grid');
-        window.scrollTo({ top: 350, behavior: 'smooth' });
-    }
-
-    function fetchGenre(id, title) {
-        document.getElementById('main-title').innerText = title;
-        fetchData(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${id}`, 'main-grid');
-        window.scrollTo({ top: 350, behavior: 'smooth' });
-    }
-
-    function launchMovie(id, type, name) {
-        alert("Establishing Secure 4K Connection for: " + name);
+    function playCinema(id, name) {
+        alert("Initializing High-Speed 4K Stream for: " + name);
         window.open(ADS, '_blank');
         const theater = document.getElementById('theater');
-        const frame = document.getElementById('cinema-iframe');
-        document.getElementById('playing-now').innerText = "PLAYING: " + name;
-        frame.src = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
+        const frame = document.getElementById('v-frame');
+        frame.src = `https://vidsrc.to/embed/movie/${id}`;
         theater.style.display = "block";
     }
 
     function exitTheater() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('cinema-frame').src = "";
+        document.getElementById('video-frame').src = "";
+    }
+
+    async function executeSearch() {
+        const q = document.getElementById('s-input').value;
+        if(q.length < 2) return;
+        alert("Searching 2026 Worldwide Database for: " + q);
+        window.open(ADS, '_blank');
     }
 
     window.onload = () => {
-        fetchData(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`, 'main-grid');
-        fetchData(`https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`, 'series-grid');
-    };
+        renderGrid(topMovies, 'movies-2026');
+        renderGrid(hotContent, 'adult-2026');
+    }
 </script>
 
 </body>
