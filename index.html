@@ -3,170 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Premium Worldwide Cinema</title>
+    <title>SPk ULTIMATE - Premium Global Cinema</title>
     <style>
-        :root { --red: #E50914; --black: #050505; --card: #181818; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --red: #E50914; --black: #000; --card: #181818; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; }
         
-        /* Premium Navigation */
-        nav { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid #222; }
-        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; }
-        .nav-links { display: flex; gap: 20px; font-weight: bold; font-size: 0.8rem; }
-        .nav-links span { cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .nav-links span:hover { color: var(--red); }
+        nav { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red); position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--red); font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Cinematic Banner */
-        .hero { height: 70vh; background: linear-gradient(to top, var(--black), transparent), url('https://image.tmdb.org/t/p/original/mBaXZ95O2mB3S5q68K9qiHrS6mC.jpg'); background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 40px 5%; }
-        .hero-content h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 10px #000; }
-        .hero-content p { color: #ccc; max-width: 600px; margin: 15px 0; font-size: 1.1rem; }
-
-        /* Search Interface */
-        .search-section { padding: 40px 5% 20px; text-align: center; }
-        .search-bar { display: flex; max-width: 650px; margin: 0 auto; background: #111; border: 2px solid var(--red); border-radius: 50px; overflow: hidden; }
-        #query { flex: 1; padding: 15px 25px; background: transparent; border: none; color: white; outline: none; font-size: 1rem; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 35px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-
-        /* Professional Content Rows */
-        .row { padding: 30px 5% 0; }
-        .row h2 { font-size: 1.4rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 25px; text-transform: uppercase; }
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .hero { padding: 60px 5%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://w0.peakpx.com/wallpaper/318/193/HD-wallpaper-movie-poster-collage.jpg'); background-size: cover; text-align: center; border-bottom: 3px solid var(--red); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
         
-        /* Netflix-style Cards */
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.4s; cursor: pointer; border: 1px solid #222; position: relative; }
-        .card:hover { transform: scale(1.1); z-index: 100; border-color: var(--red); box-shadow: 0 10px 30px #000; }
-        .card img { width: 100%; height: 240px; object-fit: cover; }
-        .card-info { padding: 12px; font-size: 0.8rem; text-align: center; font-weight: bold; }
-        .tag { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.6rem; padding: 3px 7px; font-weight: bold; border-radius: 3px; box-shadow: 0 0 10px #000; }
+        .search-box { display: flex; max-width: 600px; margin: 20px auto; background: #222; border-radius: 50px; overflow: hidden; border: 2px solid var(--red); }
+        #q-input { flex: 1; padding: 15px 25px; background: transparent; border: none; color: white; outline: none; }
+        .q-btn { background: var(--red); color: white; border: none; padding: 0 30px; font-weight: bold; cursor: pointer; }
 
-        /* Ultra HD Cinema Player */
-        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .theater-nav { position: absolute; top: 0; width: 100%; padding: 20px; background: linear-gradient(rgba(0,0,0,0.8), transparent); display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
-        .close-btn { background: var(--red); color: white; border: none; padding: 10px 30px; font-weight: bold; cursor: pointer; border-radius: 50px; }
+        .row { padding: 30px 5%; }
+        .row h2 { border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 25px; font-size: 1.2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+        
+        .card { background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #333; transition: 0.4s; cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.05); border-color: var(--red); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-name { padding: 10px; font-size: 0.8rem; font-weight: bold; text-align: center; }
+
+        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo" onclick="location.reload()">SPk ULTIMATE</div>
-    <div class="nav-links">
-        <span onclick="loadType('movie')">Movies</span>
-        <span onclick="loadType('tv')">Web Series</span>
-    </div>
-</nav>
+<nav><div class="logo">SPk ULTIMATE</div></nav>
 
 <div class="hero">
-    <div class="hero-content">
-        <h1>UNLIMITED CINEMA</h1>
-        <p>Streaming the world's biggest movies and series in 4K Ultra HD. Purely professional, purely free.</p>
+    <h1>BEYOND LIMITS</h1>
+    <p>Watch Latest Trending Movies & Series in 4K UHD</p>
+    <div class="search-box">
+        <input type="text" id="q-input" placeholder="Search Movie Name...">
+        <button class="q-btn" onclick="executeSearch()">SEARCH</button>
     </div>
-</div>
-
-<div class="search-section">
-    <div class="search-bar">
-        <input type="text" id="query" placeholder="Search Global Titles (e.g. Animal, Extraction, Batman)...">
-        <button class="s-btn" onclick="masterSearch()">SEARCH</button>
-    </div>
-</div>
-
-<div class="row" id="search-res" style="display:none;">
-    <h2 style="color:var(--red)">Search Results</h2>
-    <div class="movie-grid" id="search-grid"></div>
 </div>
 
 <div class="row">
-    <h2 id="main-title">Trending Worldwide</h2>
-    <div class="movie-grid" id="main-grid">
+    <h2 id="section-title">Worldwide Trending Now</h2>
+    <div class="grid" id="movie-grid">
         </div>
 </div>
 
 <div id="theater">
-    <div class="theater-nav">
-        <span id="playing-title" style="font-weight: 900; color: var(--red);">STREAMING 4K UHD CONTENT</span>
-        <button class="close-btn" onclick="exitTheater()">✕ EXIT THEATER</button>
-    </div>
-    <iframe id="video-frame" src="" allowfullscreen></iframe>
+    <button class="close-btn" onclick="closeMovie()">✕ CLOSE</button>
+    <iframe id="v-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
+    const moneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244";
     const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
-    const ADS_LINK = "https://narilyhukelpfulin.com/?2G2mF=1254244";
-    const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
-    // Global Renderer
-    async function renderContent(url, gridId) {
-        const grid = document.getElementById(gridId);
-        grid.innerHTML = "<p style='padding:20px; width:100%; text-align:center;'>Accessing Secure Database...</p>";
+    // 1. Static Trending List (Guaranteed to show even if API fails)
+    const hotMovies = [
+        { id: 'tt13751694', title: 'Animal', img: 'https://image.tmdb.org/t/p/w500/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg' },
+        { id: 'tt15354852', title: 'Jawan', img: 'https://image.tmdb.org/t/p/w500/jYv9Vv3noo2YnS9f89N0X9Ube5y.jpg' },
+        { id: 'tt7634468', title: 'Avatar 2', img: 'https://image.tmdb.org/t/p/w500/t6S375oO6I4u0X56gX547LKhXUf.jpg' },
+        { id: 'tt6468322', title: 'Money Heist', img: 'https://image.tmdb.org/t/p/w500/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg' },
+        { id: 'tt1160419', title: 'Dune', img: 'https://image.tmdb.org/t/p/w500/d5QYpSppFTbsdvz9h9vY9bsHUCp.jpg' },
+        { id: 'tt15239678', title: 'Dune: Part Two', img: 'https://image.tmdb.org/t/p/w500/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg' },
+        { id: 'tt16539488', title: 'Godzilla x Kong', img: 'https://image.tmdb.org/t/p/w500/v9998Zst7I79z27k31Jk5t9Mv0V.jpg' }
+    ];
+
+    function loadInitial() {
+        const grid = document.getElementById('movie-grid');
+        grid.innerHTML = "";
+        hotMovies.forEach(m => {
+            grid.appendChild(createCard(m.id, m.title, m.img, 'movie'));
+        });
+    }
+
+    function createCard(id, title, img, type) {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.onclick = () => playMovie(id, type, title);
+        div.innerHTML = `<img src="${img}"><div class="card-name">${title}</div>`;
+        return div;
+    }
+
+    async function executeSearch() {
+        const q = document.getElementById('q-input').value;
+        if(q.length < 2) return alert("Enter movie name");
         
+        document.getElementById('section-title').innerText = "Search Results for: " + q;
+        const grid = document.getElementById('movie-grid');
+        grid.innerHTML = "<p>Searching Worldwide Databases...</p>";
+
         try {
-            const res = await fetch(url);
+            const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
             const data = await res.json();
             grid.innerHTML = "";
-            
-            if(!data.results || data.results.length === 0) {
-                grid.innerHTML = "<p style='padding:20px; width:100%; text-align:center;'>No Results Found. Please try another name.</p>";
-                return;
-            }
-
             data.results.forEach(m => {
                 if(m.poster_path) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.onclick = () => launchCinema(m.id, m.media_type || 'movie', m.title || m.name);
-                    card.innerHTML = `
-                        <div class="tag">4K UHD</div>
-                        <img src="${IMG_BASE + m.poster_path}" loading="lazy">
-                        <div class="card-info">${m.title || m.name}</div>
-                    `;
-                    grid.appendChild(card);
+                    grid.appendChild(createCard(m.id, m.title || m.name, 'https://image.tmdb.org/t/p/w500' + m.poster_path, m.media_type));
                 }
             });
-        } catch(e) {
-            grid.innerHTML = "<p style='padding:20px;'>Connection error. Please refresh the page.</p>";
-        }
+        } catch(e) { alert("Please use VPN or check internet connection."); }
     }
 
-    // Professional Search
-    async function masterSearch() {
-        const q = document.getElementById('query').value;
-        if(q.length < 2) return alert("Please type a movie name!");
-        document.getElementById('search-res').style.display = "block";
-        renderContent(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(q)}`, 'search-grid');
-        window.scrollTo({ top: 500, behavior: 'smooth' });
-    }
-
-    // Category Loader
-    function loadType(type) {
-        document.getElementById('main-title').innerText = type === 'movie' ? "Trending Movies" : "Popular Series";
-        renderContent(`https://api.themoviedb.org/3/trending/${type}/week?api_key=${API_KEY}`, 'main-grid');
-    }
-
-    // THE PLAYER (REAL CONTENT)
-    function launchCinema(id, type, name) {
-        alert("Initializing High-Speed 4K Connection for: " + name);
-        window.open(ADS_LINK, '_blank'); // Your Earnings Link
-
+    function playMovie(id, type, name) {
+        alert("Connecting to Premium 4K Server for: " + name);
+        window.open(moneyLink, '_blank');
         setTimeout(() => {
             const theater = document.getElementById('theater');
-            const frame = document.getElementById('video-frame');
-            document.getElementById('playing-title').innerText = "NOW STREAMING: " + name;
-            
-            // Primary Streaming Server
-            let streamUrl = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
-            frame.src = streamUrl;
+            const frame = document.getElementById('v-frame');
+            let src = (type === 'tv') ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
+            frame.src = src;
             theater.style.display = "block";
-        }, 1500);
+        }, 1000);
     }
 
-    function exitTheater() {
+    function closeMovie() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('video-iframe').src = "";
+        document.getElementById('v-frame').src = "";
     }
 
-    // Initial Load
-    window.onload = () => renderContent(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'main-grid');
+    window.onload = loadInitial;
 </script>
 
 </body>
 </html>
-
