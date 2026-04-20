@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - 2026 Premium Cinema</title>
+    <title>SPk ULTIMATE - 2026 Global Cinema</title>
     <style>
         :root { --red: #E50914; --black: #050505; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; text-align: center; }
@@ -11,90 +11,91 @@
         nav { background: #000; padding: 15px 5%; border-bottom: 2px solid var(--red); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .logo { color: var(--red); font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
 
-        .hero { padding: 40px 5%; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://image.tmdb.org/t/p/original/69Uqt7vS68p1EBYI7913o9W4mJ7.jpg'); background-size: cover; border-bottom: 1px solid #333; }
-        .s-box { display: flex; max-width: 500px; margin: 20px auto; background: #222; border-radius: 50px; overflow: hidden; border: 1px solid var(--red); }
-        #s-input { flex: 1; padding: 12px 20px; background: transparent; border: none; color: white; outline: none; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; }
-
-        .row { padding: 25px 5%; text-align: left; }
-        .row h2 { font-size: 1.3rem; border-left: 5px solid var(--red); padding-left: 12px; margin-bottom: 20px; text-transform: uppercase; color: #fff; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .row { padding: 30px 5%; text-align: left; }
+        .row h2 { font-size: 1.4rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 25px; text-transform: uppercase; color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
         
-        .card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #222; transition: 0.3s; cursor: pointer; position: relative; }
-        .card:hover { transform: scale(1.05); border-color: var(--red); box-shadow: 0 0 15px var(--red); }
-        .card img { width: 100%; height: 210px; object-fit: cover; }
-        .card-name { padding: 8px; font-size: 0.75rem; text-align: center; font-weight: bold; height: 35px; overflow: hidden; }
-        .tag { position: absolute; top: 5px; right: 5px; background: var(--red); font-size: 0.6rem; padding: 2px 5px; font-weight: bold; border-radius: 3px; }
+        .card { background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222; transition: 0.4s; cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.1); border-color: var(--red); z-index: 100; box-shadow: 0 10px 30px #000; }
+        .card img { width: 100%; height: 230px; object-fit: cover; }
+        .card-name { padding: 12px; font-size: 0.8rem; text-align: center; font-weight: bold; }
+        .tag { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.6rem; padding: 3px 7px; font-weight: bold; border-radius: 4px; }
 
-        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .close-btn { position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav><div class="logo">SPk ULTIMATE 2026</div></nav>
+<nav><div class="logo">SPk ULTIMATE</div></nav>
 
-<div class="hero">
-    <h1>2026 GLOBAL RELEASES</h1>
-    <div class="s-box">
-        <input type="text" id="s-input" placeholder="Search 2026 Movies & Hot Series...">
-        <button class="s-btn" onclick="executeSearch()">SEARCH</button>
-    </div>
+<div class="row">
+    <h2 style="color: gold;">🔥 Dhurandhar Special</h2>
+    <div class="grid" id="grid-special"></div>
 </div>
 
 <div class="row">
-    <h2>2026 Mega Blockbusters</h2>
-    <div class="grid" id="movies-2026"></div>
+    <h2>Global Blockbusters</h2>
+    <div class="grid" id="grid-trending"></div>
 </div>
 
 <div class="row">
-    <h2 style="color: #ff4d4d;">Trending Hot & Adult</h2>
-    <div class="grid" id="adult-2026"></div>
+    <h2 style="color: #ff4d4d;">Hot & Adult Trending</h2>
+    <div class="grid" id="grid-hot"></div>
 </div>
 
 <div id="theater">
-    <button class="close-btn" onclick="exitTheater()">✕ CLOSE</button>
-    <iframe id="v-frame" src="" allowfullscreen></iframe>
+    <button class="close-btn" onclick="exitTheater()">✕ EXIT CINEMA</button>
+    <iframe id="video-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
     const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244";
-    const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
+    const P = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
 
-    const topMovies = [
-        { id: 'tt16539488', title: 'Godzilla x Kong 2', img: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg' },
-        { id: 'tt15239678', title: 'Dune: Messiah', img: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg' },
-        { id: 'tt14060094', title: 'Fighter 2', img: '/8XunofS9FvB7K0I6G2J8u70F7E.jpg' },
-        { id: 'tt11389802', title: 'Stree 3', img: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg' },
-        { id: 'tt2962390', title: 'Singham Returns', img: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg' }
+    const special = [
+        { id: 'tt27712166', t: 'Dhurandhar (2024)', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie' },
+        { id: 'tt8772262', t: 'Euphoria (All Seasons)', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv' }
     ];
 
-    const hotContent = [
-        { id: 'tt6468322', title: 'Money Heist: New Era', img: '/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg' },
-        { id: 'tt10837166', title: '365 Days: Final', img: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg' },
-        { id: 'tt13008596', title: 'Elite: Season 9', img: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg' },
-        { id: 'tt11126994', title: 'Sex/Life: Reunion', img: '/8mS2G1l7t0OQp8t50S8tWUX.jpg' },
-        { id: 'tt14671660', title: 'Obsession 2', img: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg' }
+    const trending = [
+        { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie' },
+        { id: 'tt15239678', t: 'Dune: Messiah', i: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg', type: 'movie' },
+        { id: 'tt11389802', t: 'Stree 3', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie' },
+        { id: 'tt2962390', t: 'Singham Returns', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie' }
     ];
 
-    function renderGrid(data, gridId) {
+    const hot = [
+        { id: 'tt10837166', t: '365 Days: Final Part', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie' },
+        { id: 'tt13008596', t: 'Elite: Season 9', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+        { id: 'tt11126994', t: 'Sex/Life', i: '/8mS2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+        { id: 'tt6468322', t: 'Money Heist', i: '/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg', type: 'tv' }
+    ];
+
+    function render(data, gridId) {
         const grid = document.getElementById(gridId);
         data.forEach(m => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.onclick = () => playCinema(m.id, m.title);
-            card.innerHTML = `<div class="tag">4K HDR</div><img src="${PROXY + m.img}"><div class="card-name">${m.title}</div>`;
+            card.onclick = () => playMovie(m.id, m.type, m.t);
+            card.innerHTML = `<div class="tag">4K UHD</div><img src="${P + m.i}" onerror="this.src='https://via.placeholder.com/150x230?text=${m.t}'"><div class="card-name">${m.t}</div>`;
             grid.appendChild(card);
         });
     }
 
-    function playCinema(id, name) {
-        alert("Initializing High-Speed 4K Stream for: " + name);
-        window.open(ADS, '_blank');
+    function playMovie(id, type, name) {
+        // Earnings: Ad opens in New Tab
+        window.open(ADS, '_blank'); 
+        
+        // Movie Play: Starts in the Theater overlay
+        alert("Initializing High-Speed Stream for: " + name);
         const theater = document.getElementById('theater');
-        const frame = document.getElementById('v-frame');
-        frame.src = `https://vidsrc.to/embed/movie/${id}`;
+        const frame = document.getElementById('video-frame');
+        
+        // Direct stream based on Movie or TV type
+        let streamPath = (type === 'tv') ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
+        frame.src = streamPath;
         theater.style.display = "block";
     }
 
@@ -103,16 +104,10 @@
         document.getElementById('video-frame').src = "";
     }
 
-    async function executeSearch() {
-        const q = document.getElementById('s-input').value;
-        if(q.length < 2) return;
-        alert("Searching 2026 Worldwide Database for: " + q);
-        window.open(ADS, '_blank');
-    }
-
-    window.onload = () => {
-        renderGrid(topMovies, 'movies-2026');
-        renderGrid(hotContent, 'adult-2026');
+    window.onload = () => { 
+        render(special, 'grid-special'); 
+        render(trending, 'grid-trending'); 
+        render(hot, 'grid-hot'); 
     }
 </script>
 
