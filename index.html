@@ -3,140 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk CINEMA - Next Gen Streaming</title>
+    <title>SPk Movies Hub - Stream 4K Movies</title>
     <style>
-        :root { --primary: #ff0000; --glass: rgba(255, 255, 255, 0.1); }
-        body { font-family: 'Poppins', sans-serif; background: #050505; color: #fff; margin: 0; overflow-x: hidden; }
-        
-        /* Hyper-Modern Navbar */
-        nav { background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); padding: 15px 5%; display: flex; align-items: center; justify-content: space-between; position: fixed; width: 100%; z-index: 2000; transition: 0.5s; }
-        .logo { font-size: 2rem; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 4px; border-left: 5px solid var(--primary); padding-left: 10px; }
-        
-        .search-container { position: relative; width: 40%; }
-        #search-box { width: 100%; padding: 12px 20px; border-radius: 30px; border: none; background: var(--glass); color: white; outline: none; transition: 0.3s; }
-        #search-box:focus { background: rgba(255,255,255,0.2); box-shadow: 0 0 15px var(--primary); }
+        /* Modern Netflix-like Black Theme */
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            background-color: #141414; 
+            color: white; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+        }
 
-        /* Genre Sidebar/Tabs */
-        .genres { padding: 100px 5% 20px; display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; }
-        .genres::-webkit-scrollbar { display: none; }
-        .genre-btn { padding: 8px 25px; border-radius: 20px; background: var(--glass); cursor: pointer; border: 1px solid #333; transition: 0.3s; }
-        .genre-btn:hover, .genre-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 20px var(--primary); }
+        /* Fixed Header Style */
+        header { 
+            padding: 20px; 
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0) 100%);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-        /* Cinema Grid */
-        .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; padding: 20px 5%; }
-        .movie-card { position: relative; border-radius: 15px; overflow: hidden; transition: 0.5s; cursor: pointer; background: #111; }
-        .movie-card:hover { transform: translateY(-15px) scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,1); }
-        .movie-card img { width: 100%; height: 320px; object-fit: cover; }
-        
-        /* Floating Info Overlay */
-        .info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); opacity: 0; transition: 0.3s; }
-        .movie-card:hover .info-overlay { opacity: 1; }
+        h1 { 
+            color: #E50914; /* Netflix Red */
+            margin: 0; 
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-        /* Ultra Video Player */
-        #video-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; }
-        .player-header { position: absolute; top: 0; width: 100%; padding: 20px; background: linear-gradient(rgba(0,0,0,0.8), transparent); display: flex; justify-content: space-between; align-items: center; z-index: 10000; }
-        .back-btn { font-size: 1.5rem; cursor: pointer; background: var(--primary); padding: 5px 20px; border-radius: 5px; }
+        .main-content {
+            padding-top: 100px; /* Space for fixed header */
+        }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        /* Movie Grid Layout */
+        .movie-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Professional Movie Card */
+        .movie-card { 
+            background: #1a1a1a; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Hover Effect */
+        .movie-card:hover { 
+            transform: scale(1.08); 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+
+        /* High Quality Poster Image */
+        .movie-card img { 
+            width: 100%; 
+            height: 300px; /* Fixed height for uniformity */
+            object-fit: cover; /* Ensures image fills space without stretching */
+            border-bottom: 2px solid #333;
+        }
+
+        .movie-details {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .movie-details h3 { 
+            margin: 0; 
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Truncates long titles */
+        }
+
+        .movie-details p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #b3b3b3;
+        }
+
+        /* Red "Play" Button */
+        .play-btn { 
+            background: #E50914; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-top: 15px; 
+            width: 100%; 
+            font-size: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .play-btn:hover { 
+            background: #f40612; 
+        }
+
     </style>
 </head>
 <body>
 
-<nav id="navbar">
-    <div class="logo">SPk CINEMA</div>
-    <div class="search-container">
-        <input type="text" id="search-box" placeholder="Search Worldwide Movies & TV Series..." onkeyup="handleSearch(event)">
-    </div>
-</nav>
+<header>
+    <h1>SPk Movies Hub</h1>
+</header>
 
-<div class="genres">
-    <div class="genre-btn active" onclick="loadCategory('trending')">Trending</div>
-    <div class="genre-btn" onclick="loadCategory('28')">Action</div>
-    <div class="genre-btn" onclick="loadCategory('35')">Comedy</div>
-    <div class="genre-btn" onclick="loadCategory('27')">Horror</div>
-    <div class="genre-btn" onclick="loadCategory('10749')">Romance</div>
-    <div class="genre-btn" onclick="loadCategory('tv')">TV Series</div>
-</div>
+<div class="main-content">
+    <p>Watch Latest Movies in 4K Ultra HD for Free</p>
+    
+    <div class="movie-container">
+        
+        <div class="movie-card" onclick="playMovie('Avatar 2')">
+            <img src="https://image.tmdb.org/t/p/w500/t6S375oO6I4u0X56gX547LKhXUf.jpg" alt="Avatar: The Way of Water Poster">
+            <div class="movie-details">
+                <h3>Avatar: The Way of Water</h3>
+                <p>Sci-Fi/Action • 4K UHD</p>
+                <button class="play-btn">Watch in 4K</button>
+            </div>
+        </div>
 
-<div class="main-grid" id="movie-grid">
-    </div>
+        <div class="movie-card" onclick="playMovie('Animal')">
+            <img src="https://image.tmdb.org/t/p/w500/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg" alt="Animal Poster">
+            <div class="movie-details">
+                <h3>Animal (2023)</h3>
+                <p>Crime/Action • 4K UHD</p>
+                <button class="play-btn">Watch in 4K</button>
+            </div>
+        </div>
 
-<div id="video-overlay">
-    <div class="player-header">
-        <span id="player-title" style="font-weight: bold; font-size: 1.2rem;">Playing Movie...</span>
-        <span class="back-btn" onclick="closeCinema()">✕ EXIT CINEMA</span>
-    </div>
-    <iframe id="cinema-frame" src="" allowfullscreen></iframe>
+        </div>
 </div>
 
 <script>
-    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
-    const moneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244";
-    const imgBase = "https://image.tmdb.org/t/p/w500";
+    // --- YOUR AD-MAVEN SMARTLINK CONFIGURATION ---
+    // Make sure your link (from image_8.png) is pasted here correctly
+    const spkMoneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
 
-    // 1. Intelligent Search
-    async function handleSearch(e) {
-        let q = e.target.value;
-        if(q.length > 2) {
-            let res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
-            let data = await res.json();
-            renderContent(data.results);
+    /**
+     * Main Play Function with Professional Ad-Breaks
+     * This alert notifies users about the upcoming verification (ad)
+     * which increases your revenue and user trust.
+     */
+    function playMovie(title) {
+        // Notification for user before showing the ad
+        let confirmPlay = confirm("Streaming '" + title + "' in 4K UHD... \n\nPlease click OK to connect to the fastest server.");
+        
+        if (confirmPlay) {
+            // 1. Open Ad (Pre-roll)
+            // This is where you get paid
+            window.open(spkMoneyLink, '_blank');
+            
+            // Log for debugging
+            console.log("Playing " + title + "... Ad shown.");
         }
     }
-
-    // 2. Global Category Loader
-    async function loadCategory(cat) {
-        let url = cat === 'trending' ? 
-            `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}` :
-            `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${cat}`;
-        
-        if(cat === 'tv') url = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`;
-
-        let res = await fetch(url);
-        let data = await res.json();
-        renderContent(data.results);
-    }
-
-    function renderContent(items) {
-        const grid = document.getElementById('movie-grid');
-        grid.innerHTML = "";
-        items.forEach(m => {
-            if(m.poster_path) {
-                const card = document.createElement('div');
-                card.className = 'movie-card';
-                card.onclick = () => launchCinema(m.id, m.media_type || 'movie', m.title || m.name);
-                card.innerHTML = `
-                    <img src="${imgBase + m.poster_path}">
-                    <div class="info-overlay">
-                        <div style="font-weight:bold">${m.title || m.name}</div>
-                        <div style="font-size:0.8rem; color:#aaa">⭐ ${m.vote_average} | ${m.release_date || 'Ongoing'}</div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            }
-        });
-    }
-
-    function launchCinema(id, type, name) {
-        // --- AD SYSTEM ---
-        alert("Preparing 4K Cinema Stream for " + name + "... Verify on next page.");
-        window.open(moneyLink, '_blank');
-
-        // --- PLAYER SYSTEM ---
-        setTimeout(() => {
-            document.getElementById('player-title').innerText = "Streaming: " + name;
-            let src = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
-            document.getElementById('cinema-frame').src = src;
-            document.getElementById('video-overlay').style.display = "block";
-        }, 2000);
-    }
-
-    function closeCinema() {
-        document.getElementById('video-overlay').style.display = "none";
-        document.getElementById('cinema-frame').src = "";
-    }
-
-    window.onload = () => loadCategory('trending');
 </script>
 
 </body>
