@@ -3,68 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk Movies Hub - Stream 4K Movies</title>
+    <title>SPk Movies Hub - Premium 4K Streaming</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #0f171e; color: white; text-align: center; margin: 0; padding: 20px; }
-        header { padding: 20px; background: #1a242f; border-bottom: 3px solid #ff9900; margin-bottom: 30px; }
-        h1 { color: #ff9900; margin: 0; }
-        .movie-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        .movie-card { background: #1a242f; border-radius: 10px; padding: 15px; width: 250px; transition: transform 0.3s; }
-        .movie-card:hover { transform: scale(1.05); }
-        .movie-card img { width: 100%; border-radius: 8px; }
-        .play-btn { background: #ff9900; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
-        .play-btn:hover { background: #e68a00; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #000; color: white; margin: 0; padding: 0; }
+        header { padding: 20px; background: linear-gradient(to bottom, #111, #000); border-bottom: 2px solid #E50914; text-align: center; position: sticky; top: 0; z-index: 100; }
+        h1 { color: #E50914; margin: 0; font-size: 2rem; letter-spacing: 2px; }
+        .section-title { text-align: left; padding: 20px 0 0 40px; font-size: 1.5rem; color: #fff; }
+        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; padding: 20px 40px; }
+        .card { background: #141414; border-radius: 8px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; }
+        .card:hover { transform: scale(1.1); border-color: #E50914; z-index: 10; }
+        .card img { width: 100%; height: 260px; object-fit: cover; }
+        .card-info { padding: 10px; text-align: left; }
+        .card-info h3 { margin: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-info p { color: #888; font-size: 0.8rem; margin: 5px 0 0; }
+        #player-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: #E50914; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; z-index: 10001; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SPk Movies Hub</h1>
-    <p>Watch Latest Movies in 4K Ultra HD for Free</p>
+    <h1>SPk MOVIES HUB</h1>
+    <p style="font-size: 0.8rem; color: #888;">Stream Hollywood, Bollywood & Web Series in 4K</p>
 </header>
 
-<div class="movie-container">
-    <div class="movie-card">
-        <img src="https://via.placeholder.com/250x350?text=Avatar+2" alt="Movie Poster">
-        <h3>Avatar: The Way of Water</h3>
-        <button class="play-btn" onclick="playMovie('Avatar 2')">Watch in 4K</button>
+<div class="section-title">Trending Now</div>
+<div class="movie-grid">
+    <div class="card" onclick="openPlayer('tt13751694', 'movie')">
+        <img src="https://image.tmdb.org/t/p/w500/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg" alt="Animal">
+        <div class="card-info"><h3>Animal (2023)</h3><p>Action/Crime • 4K</p></div>
     </div>
 
-    <div class="movie-card">
-        <img src="https://via.placeholder.com/250x350?text=Animal" alt="Movie Poster">
-        <h3>Animal (2023)</h3>
-        <button class="play-btn" onclick="playMovie('Animal')">Watch in 4K</button>
+    <div class="card" onclick="openPlayer('tt7634468', 'movie')">
+        <img src="https://image.tmdb.org/t/p/w500/t6S375oO6I4u0X56gX547LKhXUf.jpg" alt="Avatar">
+        <div class="card-info"><h3>Avatar: Way of Water</h3><p>Sci-Fi • 4K</p></div>
     </div>
 
+    <div class="card" onclick="openPlayer('tt15239678', 'movie')">
+        <img src="https://image.tmdb.org/t/p/w500/8GxvA9zDZ9G0SGRQvBvSxmlQeWg.jpg" alt="Oppenheimer">
+        <div class="card-info"><h3>Oppenheimer</h3><p>Drama/History • 4K</p></div>
     </div>
+
+    <div class="card" onclick="openPlayer('tt15354852', 'movie')">
+        <img src="https://image.tmdb.org/t/p/w500/jYv9Vv3noo2YnS9f89N0X9Ube5y.jpg" alt="Jawan">
+        <div class="card-info"><h3>Jawan (2023)</h3><p>Action/Thriller • 4K</p></div>
+    </div>
+</div>
+
+<div class="section-title">Must Watch Web Series</div>
+<div class="movie-grid">
+    <div class="card" onclick="openPlayer('tt4574334', 'tv')">
+        <img src="https://image.tmdb.org/t/p/w500/49Wfivq0Tdvu0R1rNV99p6P6HGI.jpg" alt="Stranger Things">
+        <div class="card-info"><h3>Stranger Things</h3><p>All Seasons • Full HD</p></div>
+    </div>
+
+    <div class="card" onclick="openPlayer('tt6468322', 'tv')">
+        <img src="https://image.tmdb.org/t/p/w500/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg" alt="Money Heist">
+        <div class="card-info"><h3>Money Heist</h3><p>All Seasons • Full HD</p></div>
+    </div>
+
+    <div class="card" onclick="openPlayer('tt9140554', 'tv')">
+        <img src="https://image.tmdb.org/t/p/w500/voHUSTuYmwi2bPJT5y7YmB71STB.jpg" alt="Loki">
+        <div class="card-info"><h3>Loki</h3><p>Season 1 & 2 • 4K</p></div>
+    </div>
+</div>
+
+<div id="player-container">
+    <button class="close-btn" onclick="closePlayer()">CLOSE PLAYER</button>
+    <iframe id="video-iframe" src="" allowfullscreen></iframe>
+</div>
 
 <script>
-    // --- YOUR AD-MAVEN SMARTLINK CONFIGURATION ---
+    // Your High-Paying Ad-Maven Link
     const spkMoneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244";
 
-    /**
-     * Main Play Function with Professional Ad-Breaks
-     * Designed for Maximum Revenue (India + Global)
-     */
-    function playMovie(title) {
-        console.log("Initializing Secure Stream for: " + title);
-        
-        // 1. Pre-roll Verification (Revenue Generation Start)
-        const userProceed = confirm("Streaming '" + title + "' in 4K Ultra HD.\n\nClick OK to verify your free access and connect to Server.");
+    function openPlayer(id, type) {
+        // 1. Revenue System (Ad Opens First)
+        alert("Connecting to 4K Global Server... \n\nPlease complete the verification to start streaming.");
+        window.open(spkMoneyLink, '_blank');
 
-        if (userProceed) {
-            // Opens your Ad-Maven SmartLink
-            window.open(spkMoneyLink, '_blank');
+        // 2. Automated Full Movie/Series Delivery
+        setTimeout(() => {
+            const player = document.getElementById('player-container');
+            const iframe = document.getElementById('video-iframe');
             
-            alert("Verification Started! Please stay on the next page for 5 seconds. Your movie is buffering in the background.");
+            // This pulls content from global database
+            if(type === 'movie') {
+                iframe.src = "https://vidsrc.to/embed/movie/" + id;
+            } else {
+                iframe.src = "https://vidsrc.to/embed/tv/" + id;
+            }
             
-            // 2. Mid-roll Passive Income (Triggered after 10 minutes)
-            // This ensures you get paid twice from the same user
-            setTimeout(() => {
-                console.log("Maintaining server bitrate...");
-                window.open(spkMoneyLink, '_blank');
-            }, 600000); // 10 Minutes timer
-        }
+            player.style.display = "block";
+        }, 2000); 
+    }
+
+    function closePlayer() {
+        document.getElementById('player-container').style.display = "none";
+        document.getElementById('video-iframe').src = "";
     }
 </script>
 
