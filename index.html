@@ -3,145 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Worldwide Cinema</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <title>SPk ULTIMATE - The Elite Cinema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --red: #E50914; --black: #000; --card-bg: #111; --glow: rgba(229, 9, 20, 0.5); }
-        body { font-family: 'Outfit', sans-serif; background: var(--black); color: #fff; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
+        :root { --accent: #E50914; --bg: #050505; --card-bg: #121212; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* Glassmorphism Navbar */
-        nav { background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); padding: 15px 5%; display: flex; align-items: center; justify-content: space-between; position: fixed; width: 100%; z-index: 5000; box-sizing: border-box; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 2rem; font-weight: 900; color: var(--red); text-transform: uppercase; letter-spacing: 3px; cursor: pointer; filter: drop-shadow(0 0 10px var(--red)); }
+        /* Glassmorphism Header */
+        header { background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); padding: 15px 5%; display: flex; align-items: center; justify-content: space-between; position: fixed; width: 100%; z-index: 5000; box-sizing: border-box; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
         
-        .search-container { position: relative; width: 45%; display: flex; }
-        #search-box { width: 100%; padding: 12px 20px; border-radius: 30px; border: none; background: rgba(255,255,255,0.1); color: white; outline: none; border: 1px solid transparent; transition: 0.3s; }
-        #search-box:focus { background: rgba(255,255,255,0.2); border-color: var(--red); box-shadow: 0 0 15px var(--glow); }
+        .search-engine { display: flex; width: 50%; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px 15px; border: 1px solid transparent; transition: 0.4s; }
+        .search-engine:focus-within { border-color: var(--accent); box-shadow: 0 0 20px rgba(229, 9, 20, 0.4); background: rgba(255,255,255,0.15); }
+        #search-query { flex: 1; background: transparent; border: none; color: white; padding: 10px; outline: none; font-size: 1rem; }
+        .search-trigger { background: var(--accent); color: white; border: none; padding: 8px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; }
 
-        /* Cinematic Hero Section */
-        .hero { height: 85vh; background: linear-gradient(to top, var(--black) 10%, transparent 80%), url('https://image.tmdb.org/t/p/original/69Uqt7vS68p1EBYI7913o9W4mJ7.jpg'); background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 40px 5%; position: relative; }
-        .hero-content { max-width: 700px; animation: fadeInUp 1s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .hero-content h1 { font-size: 4rem; margin: 0; text-shadow: 0 5px 20px #000; }
-        .hero-content p { font-size: 1.2rem; color: #ddd; margin: 20px 0; line-height: 1.6; }
-        .hero-btn { background: var(--red); color: white; border: none; padding: 15px 40px; font-weight: 900; border-radius: 5px; cursor: pointer; font-size: 1.1rem; box-shadow: 0 0 20px var(--glow); transition: 0.3s; }
-        .hero-btn:hover { background: white; color: black; box-shadow: 0 0 30px white; }
+        /* Cinematic Experience Layout */
+        .hero-banner { height: 70vh; background: linear-gradient(to top, var(--bg) 5%, transparent 90%), url('https://image.tmdb.org/t/p/original/69Uqt7vS68p1EBYI7913o9W4mJ7.jpg'); background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 50px 5%; }
+        .hero-info h1 { font-size: 3.5rem; margin: 0; text-shadow: 0 10px 30px #000; }
 
-        /* Netflix Content Rows */
-        .row { padding: 30px 0 0 5%; background: var(--black); }
-        .row h2 { font-size: 1.5rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding-right: 5%; }
+        /* Multi-Server Movie Grid */
+        .content-section { padding: 40px 5% 0; }
+        .content-section h2 { font-size: 1.5rem; border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 25px; letter-spacing: 1px; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 25px; }
         
-        .card { position: relative; border-radius: 10px; overflow: hidden; transition: 0.5s; cursor: pointer; background: var(--card-bg); border: 1px solid #222; }
-        .card:hover { transform: scale(1.1) translateY(-10px); z-index: 100; border-color: var(--red); box-shadow: 0 10px 40px #000; }
-        .card img { width: 100%; height: 240px; object-fit: cover; }
-        .card-info { position: absolute; bottom: 0; width: 100%; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); opacity: 0; transition: 0.3s; }
-        .card:hover .card-info { opacity: 1; }
-        .quality-tag { position: absolute; top: 10px; left: 10px; background: var(--red); padding: 3px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 3px; }
+        .movie-tile { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 1px solid #1a1a1a; position: relative; }
+        .movie-tile:hover { transform: scale(1.1) translateY(-10px); z-index: 100; border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        .movie-tile img { width: 100%; height: 260px; object-fit: cover; transition: 0.5s; }
+        .movie-tile:hover img { filter: brightness(0.5); }
+        
+        .overlay-info { position: absolute; bottom: 0; width: 100%; padding: 20px; box-sizing: border-box; background: linear-gradient(transparent, rgba(0,0,0,1)); opacity: 0; transition: 0.3s; }
+        .movie-tile:hover .overlay-info { opacity: 1; }
+        .play-icon { background: var(--accent); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 1.2rem; }
 
-        /* Full Cinema Theater Mode */
-        #theater-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .theater-header { position: absolute; top: 0; width: 100%; padding: 20px; background: linear-gradient(rgba(0,0,0,0.9), transparent); display: flex; justify-content: space-between; align-items: center; z-index: 10001; box-sizing: border-box; }
-        .exit-btn { background: var(--red); color: white; border: none; padding: 10px 25px; font-weight: bold; border-radius: 50px; cursor: pointer; }
+        /* The Hybrid Theater Player */
+        #theater-system { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
+        .theater-nav { position: absolute; top: 20px; width: 100%; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .close-cinema { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem; box-shadow: 0 0 20px var(--accent); }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo" onclick="window.location.reload()">SPk ULTIMATE</div>
-    <div class="search-container">
-        <input type="text" id="search-box" placeholder="Search Global Movies, TV Shows, Anime..." onkeyup="handleSearch(event)">
+<header>
+    <div class="logo">SPk CINEMA</div>
+    <div class="search-engine">
+        <input type="text" id="search-query" placeholder="Type name (e.g. Animal, Extraction)...">
+        <button class="search-trigger" onclick="deepSearch()">SEARCH</button>
     </div>
-</nav>
+</header>
 
-<div class="hero">
-    <div class="hero-content">
-        <h1>BEYOND CINEMA</h1>
-        <p>Streaming the world's most premium stories. No limits, no subscriptions. Only Pure 4K Quality.</p>
-        <button class="hero-btn" onclick="scrollToContent()">START WATCHING</button>
+<div class="hero-banner">
+    <div class="hero-info">
+        <h1>BEYOND LIMITS</h1>
+        <p style="color:#aaa; font-size: 1.1rem; max-width: 500px;">Direct access to millions of 4K titles. Powered by Hybrid Streaming Technology.</p>
     </div>
 </div>
 
-<div class="row" id="search-section" style="display:none;">
-    <h2 style="color:var(--red)">Search Results</h2>
-    <div class="movie-grid" id="search-grid"></div>
+<div class="content-section" id="results-area" style="display:none;">
+    <h2 style="color:var(--accent)">Instant Matches</h2>
+    <div class="grid-layout" id="search-results"></div>
 </div>
 
-<div class="row" id="main-content">
-    <h2 id="section-title">Trending Worldwide</h2>
-    <div class="movie-grid" id="main-grid">
+<div class="content-section">
+    <h2>Trending Masterpieces</h2>
+    <div class="grid-layout" id="global-trending">
         </div>
 </div>
 
-<div id="theater-overlay">
-    <div class="theater-header">
-        <span id="playing-title" style="font-weight: 900; font-size: 1.2rem; color: var(--red);">STREAMING IN 4K UHD</span>
-        <button class="exit-btn" onclick="closeTheater()">✕ EXIT THEATER</button>
+<div id="theater-system">
+    <div class="theater-nav">
+        <span id="movie-status" style="font-weight: 900; color: var(--accent); letter-spacing: 2px;">4K ULTRA HD STREAM</span>
+        <button class="close-cinema" onclick="shutTheater()">✕ EXIT CINEMA</button>
     </div>
-    <iframe id="cinema-frame" src="" allowfullscreen></iframe>
+    <iframe id="cinema-iframe" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
-    const moneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244";
-    const imgPath = "https://image.tmdb.org/t/p/w500";
+    // --- ADVANCED ELITE CONFIGURATION ---
+    const KEY = '844dba0bfd443a56f92d74a0d0d88b03';
+    const MONEY_LINK = "https://narilyhukelpfulin.com/?2G2mF=1254244";
+    const POSTER_HOST = "https://image.tmdb.org/t/p/w400";
 
-    async function handleSearch(e) {
-        const q = e.target.value;
-        const sSec = document.getElementById('search-section');
-        const sGrid = document.getElementById('search-grid');
-        if(q.length > 2) {
-            sSec.style.display = "block";
-            sGrid.innerHTML = "";
-            fetchData(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-grid');
-        } else { sSec.style.display = "none"; }
+    // Instant Deep Search Engine
+    async function deepSearch() {
+        const query = document.getElementById('search-query').value;
+        if(!query) return;
+        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${KEY}&query=${query}`);
+        const data = await res.json();
+        const grid = document.getElementById('search-results');
+        document.getElementById('results-area').style.display = "block";
+        grid.innerHTML = "";
+        injectCards(data.results, 'search-results');
+        window.scrollTo({ top: 600, behavior: 'smooth' });
     }
 
-    async function fetchData(url, gridId) {
-        const res = await fetch(url);
-        const data = await res.json();
-        const grid = document.getElementById(gridId);
-        data.results.forEach(m => {
+    // Elite Injection Logic
+    function injectCards(items, targetId) {
+        const target = document.getElementById(targetId);
+        items.forEach(m => {
             if(m.poster_path) {
                 const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => launchTheater(m.id, m.media_type || 'movie', m.title || m.name);
+                card.className = 'movie-tile';
+                card.onclick = () => launchElitePlayer(m.id, m.media_type || 'movie', m.title || m.name);
                 card.innerHTML = `
-                    <div class="quality-tag">4K UHD</div>
-                    <img src="${imgPath + m.poster_path}" loading="lazy">
-                    <div class="card-info">
-                        <div style="font-weight:900">${m.title || m.name}</div>
-                        <div style="font-size:0.8rem;color:var(--red)">⭐ ${m.vote_average} | Official Stream</div>
+                    <img src="${POSTER_HOST + m.poster_path}" loading="lazy">
+                    <div class="overlay-info">
+                        <div class="play-icon">▶</div>
+                        <div style="font-weight:700">${m.title || m.name}</div>
+                        <div style="font-size:0.8rem;color:#888">Premium 4K HDR</div>
                     </div>
                 `;
-                grid.appendChild(card);
+                target.appendChild(card);
             }
         });
     }
 
-    function launchTheater(id, type, name) {
-        // --- AD REVENUE MAXIMIZER ---
-        alert("Verification Required: Connecting to SPk Premium Global Server for '" + name + "'...");
-        window.open(moneyLink, '_blank');
+    // Hybrid Multi-Server Launch
+    function launchElitePlayer(id, type, name) {
+        // --- AD MAXIMIZER ---
+        alert("Establishing Secure Direct Connection for: " + name);
+        window.open(MONEY_LINK, '_blank');
 
-        // --- CINEMATIC DELIVERY ---
+        // --- SEAMLESS PLAYER INJECTION ---
         setTimeout(() => {
-            document.getElementById('playing-title').innerText = "STREAMING: " + name;
-            const src = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
-            document.getElementById('cinema-frame').src = src;
-            document.getElementById('theater-overlay').style.display = "block";
-        }, 2000);
+            const theater = document.getElementById('theater-system');
+            const iframe = document.getElementById('cinema-iframe');
+            // Advanced Direct Embedding Link
+            const serverUrl = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
+            iframe.src = serverUrl;
+            theater.style.display = "block";
+        }, 1200);
     }
 
-    function closeTheater() {
-        document.getElementById('theater-overlay').style.display = "none";
-        document.getElementById('cinema-frame').src = "";
+    function shutTheater() {
+        document.getElementById('theater-system').style.display = "none";
+        document.getElementById('cinema-iframe').src = "";
     }
 
-    function scrollToContent() { window.scrollTo({ top: 800, behavior: 'smooth' }); }
-
+    // Auto-Populate Initial Global State
     window.onload = () => {
-        fetchData(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'main-grid');
+        fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${KEY}`)
+        .then(r => r.json())
+        .then(d => injectCards(d.results, 'global-trending'));
     };
 </script>
 
