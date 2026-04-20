@@ -3,129 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Premium Global Cinema</title>
+    <title>SPk ULTIMATE - Premium Global Streaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --red: #E50914; --black: #000; --card: #181818; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; }
+        :root { --red: #E50914; --black: #050505; --card-bg: #141414; }
+        body { font-family: 'Outfit', sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
         
-        nav { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red); position: sticky; top: 0; z-index: 1000; }
-        .logo { color: var(--red); font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        /* Premium Navbar */
+        nav { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; box-sizing: border-box; }
+        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; cursor: pointer; }
+        .nav-links { display: flex; gap: 20px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        .nav-links span { cursor: pointer; transition: 0.3s; }
+        .nav-links span:hover { color: var(--red); }
 
-        .hero { padding: 60px 5%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://w0.peakpx.com/wallpaper/318/193/HD-wallpaper-movie-poster-collage.jpg'); background-size: cover; text-align: center; border-bottom: 3px solid var(--red); }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        /* Search Banner */
+        .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #111, var(--black)); }
+        .search-bar { display: flex; max-width: 600px; margin: 20px auto; background: #222; border-radius: 50px; overflow: hidden; border: 1px solid #444; }
+        #query { flex: 1; padding: 15px 25px; border: none; background: transparent; color: white; outline: none; font-size: 1rem; }
+        .s-btn { background: var(--red); border: none; color: white; padding: 0 30px; font-weight: bold; cursor: pointer; }
+
+        /* Rows Layout */
+        .row { padding: 20px 0 0 5%; }
+        .row h2 { font-size: 1.3rem; margin-bottom: 15px; border-left: 4px solid var(--red); padding-left: 12px; }
+        .posters-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scroll-behavior: smooth; }
+        .posters-scroll::-webkit-scrollbar { display: none; }
         
-        .search-box { display: flex; max-width: 600px; margin: 20px auto; background: #222; border-radius: 50px; overflow: hidden; border: 2px solid var(--red); }
-        #q-input { flex: 1; padding: 15px 25px; background: transparent; border: none; color: white; outline: none; }
-        .q-btn { background: var(--red); color: white; border: none; padding: 0 30px; font-weight: bold; cursor: pointer; }
+        /* Netflix Style Cards */
+        .movie-card { flex: 0 0 150px; height: 225px; background: var(--card-bg); border-radius: 8px; overflow: hidden; position: relative; transition: 0.4s; cursor: pointer; }
+        .movie-card:hover { transform: scale(1.1); z-index: 100; box-shadow: 0 10px 30px #000; border: 2px solid var(--red); }
+        .movie-card img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 8px; right: 8px; background: var(--red); font-size: 0.6rem; padding: 2px 5px; font-weight: bold; border-radius: 3px; }
 
-        .row { padding: 30px 5%; }
-        .row h2 { border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 25px; font-size: 1.2rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
-        
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #333; transition: 0.4s; cursor: pointer; position: relative; }
-        .card:hover { transform: scale(1.05); border-color: var(--red); }
-        .card img { width: 100%; height: 220px; object-fit: cover; }
-        .card-name { padding: 10px; font-size: 0.8rem; font-weight: bold; text-align: center; }
-
-        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000; }
-        .close-btn { position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        /* Cinema Theater Player */
+        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
+        .theater-header { position: absolute; top: 0; width: 100%; padding: 20px; background: linear-gradient(rgba(0,0,0,0.8), transparent); display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .close-btn { background: var(--red); color: white; border: none; padding: 10px 25px; font-weight: bold; cursor: pointer; border-radius: 5px; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav><div class="logo">SPk ULTIMATE</div></nav>
+<nav>
+    <div class="logo" onclick="location.reload()">SPk ULTIMATE</div>
+    <div class="nav-links">
+        <span onclick="fetchByGenre(28, 'Action')">Action</span>
+        <span onclick="fetchByGenre(16, 'Animation/Kids')">Kids</span>
+        <span onclick="fetchByGenre(18, 'Drama')">Drama</span>
+        <span onclick="fetchByGenre(10749, 'Romance')">Adult/Romance</span>
+    </div>
+</nav>
 
 <div class="hero">
-    <h1>BEYOND LIMITS</h1>
-    <p>Watch Latest Trending Movies & Series in 4K UHD</p>
-    <div class="search-box">
-        <input type="text" id="q-input" placeholder="Search Movie Name...">
-        <button class="q-btn" onclick="executeSearch()">SEARCH</button>
+    <h1>ALL WORLDWIDE CONTENT</h1>
+    <div class="search-bar">
+        <input type="text" id="query" placeholder="Search any movie or webseries (Netflix, HBO, Disney)...">
+        <button class="s-btn" onclick="globalSearch()">SEARCH</button>
     </div>
 </div>
 
+<div class="row" id="search-row" style="display:none;">
+    <h2 id="search-label">Results</h2>
+    <div class="posters-scroll" id="search-grid"></div>
+</div>
+
 <div class="row">
-    <h2 id="section-title">Worldwide Trending Now</h2>
-    <div class="grid" id="movie-grid">
-        </div>
+    <h2 id="section-title">Trending Globally</h2>
+    <div class="posters-scroll" id="trending-grid"></div>
+</div>
+
+<div class="row">
+    <h2>Popular TV Series</h2>
+    <div class="posters-scroll" id="series-grid"></div>
 </div>
 
 <div id="theater">
-    <button class="close-btn" onclick="closeMovie()">✕ CLOSE</button>
-    <iframe id="v-frame" src="" allowfullscreen></iframe>
+    <div class="theater-header">
+        <span id="playing-now" style="font-weight: bold; color: var(--red);">4K ULTRA HD STREAMING</span>
+        <button class="close-btn" onclick="closeTheater()">✕ CLOSE</button>
+    </div>
+    <iframe id="cinema-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const moneyLink = "https://narilyhukelpfulin.com/?2G2mF=1254244";
     const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
+    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; // Your Earning Link
+    const IMG_HOST = "https://image.tmdb.org/t/p/w500";
 
-    // 1. Static Trending List (Guaranteed to show even if API fails)
-    const hotMovies = [
-        { id: 'tt13751694', title: 'Animal', img: 'https://image.tmdb.org/t/p/w500/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg' },
-        { id: 'tt15354852', title: 'Jawan', img: 'https://image.tmdb.org/t/p/w500/jYv9Vv3noo2YnS9f89N0X9Ube5y.jpg' },
-        { id: 'tt7634468', title: 'Avatar 2', img: 'https://image.tmdb.org/t/p/w500/t6S375oO6I4u0X56gX547LKhXUf.jpg' },
-        { id: 'tt6468322', title: 'Money Heist', img: 'https://image.tmdb.org/t/p/w500/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg' },
-        { id: 'tt1160419', title: 'Dune', img: 'https://image.tmdb.org/t/p/w500/d5QYpSppFTbsdvz9h9vY9bsHUCp.jpg' },
-        { id: 'tt15239678', title: 'Dune: Part Two', img: 'https://image.tmdb.org/t/p/w500/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg' },
-        { id: 'tt16539488', title: 'Godzilla x Kong', img: 'https://image.tmdb.org/t/p/w500/v9998Zst7I79z27k31Jk5t9Mv0V.jpg' }
-    ];
-
-    function loadInitial() {
-        const grid = document.getElementById('movie-grid');
-        grid.innerHTML = "";
-        hotMovies.forEach(m => {
-            grid.appendChild(createCard(m.id, m.title, m.img, 'movie'));
-        });
-    }
-
-    function createCard(id, title, img, type) {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.onclick = () => playMovie(id, type, title);
-        div.innerHTML = `<img src="${img}"><div class="card-name">${title}</div>`;
-        return div;
-    }
-
-    async function executeSearch() {
-        const q = document.getElementById('q-input').value;
-        if(q.length < 2) return alert("Enter movie name");
-        
-        document.getElementById('section-title').innerText = "Search Results for: " + q;
-        const grid = document.getElementById('movie-grid');
-        grid.innerHTML = "<p>Searching Worldwide Databases...</p>";
-
+    async function loadData(url, gridId) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = "<p style='padding:20px;'>Syncing with Servers...</p>";
         try {
-            const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
+            const res = await fetch(url);
             const data = await res.json();
             grid.innerHTML = "";
             data.results.forEach(m => {
                 if(m.poster_path) {
-                    grid.appendChild(createCard(m.id, m.title || m.name, 'https://image.tmdb.org/t/p/w500' + m.poster_path, m.media_type));
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.onclick = () => openMovie(m.id, m.media_type || 'movie', m.title || m.name);
+                    card.innerHTML = `<div class="badge">4K</div><img src="${IMG_HOST + m.poster_path}">`;
+                    grid.appendChild(card);
                 }
             });
-        } catch(e) { alert("Please use VPN or check internet connection."); }
+        } catch(e) { grid.innerHTML = "<p>Connection Error. Use VPN.</p>"; }
     }
 
-    function playMovie(id, type, name) {
-        alert("Connecting to Premium 4K Server for: " + name);
-        window.open(moneyLink, '_blank');
-        setTimeout(() => {
-            const theater = document.getElementById('theater');
-            const frame = document.getElementById('v-frame');
-            let src = (type === 'tv') ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
-            frame.src = src;
-            theater.style.display = "block";
-        }, 1000);
+    async function globalSearch() {
+        const q = document.getElementById('query').value;
+        if(q.length < 2) return;
+        document.getElementById('search-row').style.display = "block";
+        loadData(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-grid');
+        window.scrollTo({ top: 350, behavior: 'smooth' });
     }
 
-    function closeMovie() {
+    async function fetchByGenre(id, label) {
+        document.getElementById('section-title').innerText = label + " Highlights";
+        loadData(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${id}`, 'trending-grid');
+    }
+
+    function openMovie(id, type, name) {
+        alert("Establishing Secure 4K Connection for: " + name);
+        window.open(ADS, '_blank'); // Open ad in new tab
+        
+        // Return to site and load movie immediately
+        const theater = document.getElementById('theater');
+        const frame = document.getElementById('cinema-frame');
+        document.getElementById('playing-now').innerText = "NOW PLAYING: " + name;
+        frame.src = type === 'tv' ? `https://vidsrc.to/embed/tv/${id}` : `https://vidsrc.to/embed/movie/${id}`;
+        theater.style.display = "block";
+    }
+
+    function closeTheater() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('v-frame').src = "";
+        document.getElementById('cinema-frame').src = "";
     }
 
-    window.onload = loadInitial;
+    window.onload = () => {
+        loadData(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`, 'trending-grid');
+        loadData(`https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`, 'series-grid');
+    };
 </script>
 
 </body>
 </html>
+
