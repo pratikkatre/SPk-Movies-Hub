@@ -3,134 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Worldwide Netflix Edition</title>
+    <title>SPk ULTIMATE - Global 4K Streaming</title>
     <style>
-        :root { --red: #E50914; --black: #050505; --card-bg: #141414; }
+        :root { --red: #E50914; --black: #050505; --gray: #141414; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
         
         /* Premium Navigation */
-        nav { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 1px solid #222; box-sizing: border-box; }
-        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; }
-        
-        /* Search Banner */
-        .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #181818, #050505); }
-        .search-container { display: flex; max-width: 700px; margin: 20px auto; background: #222; border-radius: 4px; overflow: hidden; border: 1px solid #444; }
-        #query { flex: 1; padding: 15px; border: none; background: transparent; color: white; outline: none; font-size: 1rem; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 30px; font-weight: bold; cursor: pointer; }
+        nav { background: rgba(0,0,0,0.95); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 2px solid var(--red); box-sizing: border-box; }
+        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
 
-        /* Netflix Content Rows */
-        .row { padding: 25px 0 0 5%; }
-        .row h2 { font-size: 1.4rem; margin-bottom: 15px; border-left: 5px solid var(--red); padding-left: 12px; }
-        .posters-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 25px; scroll-behavior: smooth; }
-        .posters-scroll::-webkit-scrollbar { display: none; }
+        /* Hero Header */
+        .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #1a1a1a, #000); }
+        .hero h1 { font-size: 2.5rem; margin: 0; color: #fff; }
+        .hero p { color: var(--red); font-weight: bold; font-size: 1.1rem; margin-top: 10px; }
+
+        /* Row Layout */
+        .row { padding: 30px 5% 0; text-align: left; }
+        .row h2 { font-size: 1.4rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 20px; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
         
-        /* Cards */
-        .card { flex: 0 0 160px; height: 240px; background: var(--card-bg); border-radius: 6px; overflow: hidden; transition: 0.4s; cursor: pointer; border: 1px solid #222; position: relative; }
+        /* Netflix Style Cards */
+        .card { background: var(--gray); border-radius: 8px; overflow: hidden; border: 1px solid #333; transition: 0.4s; cursor: pointer; position: relative; }
         .card:hover { transform: scale(1.1); z-index: 100; border-color: var(--red); box-shadow: 0 10px 40px #000; }
-        .card img { width: 100%; height: 100%; object-fit: cover; background: #111; }
-        .badge { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.65rem; padding: 3px 7px; font-weight: bold; border-radius: 3px; }
+        .card img { width: 100%; height: 230px; object-fit: cover; background: #222; }
+        .card-name { padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .badge { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.6rem; padding: 3px 8px; font-weight: bold; border-radius: 4px; box-shadow: 0 0 10px #000; }
 
-        /* Video Theater */
+        /* Professional Cinema Player */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(rgba(0,0,0,0.8), transparent); z-index: 10001; box-sizing: border-box; }
+        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; background: linear-gradient(rgba(0,0,0,0.9), transparent); z-index: 10001; }
         .close-btn { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; }
+        .server-switcher { display: flex; gap: 10px; margin-top: 10px; }
+        .s-btn { background: #333; color: white; border: 1px solid #555; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+        .s-btn:hover { background: var(--red); }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<nav><a href="#" class="logo" onclick="location.reload()">SPk ULTIMATE</a></nav>
+<nav><a href="#" class="logo">SPk ULTIMATE</a></nav>
 
 <div class="hero">
-    <h1>UNLIMITED MOVIES & SERIES</h1>
-    <div class="search-container">
-        <input type="text" id="query" placeholder="Search Netflix, HBO, 18+ Content...">
-        <button class="s-btn" onclick="searchGlobal()">SEARCH</button>
-    </div>
-</div>
-
-<div class="row" id="search-row" style="display:none;">
-    <h2 id="s-label" style="color:var(--red);">Search Results</h2>
-    <div class="posters-scroll" id="search-grid"></div>
+    <h1>UNLIMITED GLOBAL CINEMA</h1>
+    <p>Movies • Series • 18+ Premium Content</p>
 </div>
 
 <div class="row">
-    <h2>Trending Globally</h2>
-    <div class="posters-scroll" id="trending-grid"></div>
+    <h2 style="color: gold;">🌍 GLOBAL TRENDING HITS</h2>
+    <div class="grid" id="trending-grid"></div>
 </div>
 
 <div class="row">
-    <h2 style="color:#ff4d4d;">🔞 Hot & Adult Shows (18+)</h2>
-    <div class="posters-scroll" id="hot-grid"></div>
+    <h2 style="color: #ff4d4d;">🔞 HOT & ADULT SPECIAL (18+)</h2>
+    <div class="grid" id="adult-grid"></div>
 </div>
 
 <div class="row">
-    <h2>Top TV Series</h2>
-    <div class="posters-scroll" id="series-grid"></div>
+    <h2>📺 TOP RATED WEB SERIES</h2>
+    <div class="grid" id="series-grid"></div>
 </div>
 
 <div id="theater">
     <div class="t-header">
-        <span id="playing-title" style="font-weight: bold; color: var(--red);">4K UHD STREAMING</span>
-        <button class="close-btn" onclick="closeT()">✕ EXIT THEATER</button>
+        <div>
+            <span id="playing-title" style="font-weight: 900; color: var(--red);">STREAMING IN 4K</span>
+            <div class="server-switcher">
+                <button class="s-btn" onclick="changeS(1)">Server 1</button>
+                <button class="s-btn" onclick="changeS(2)">Server 2</button>
+            </div>
+        </div>
+        <button class="close-btn" onclick="closeT()">✕ EXIT</button>
     </div>
-    <iframe id="video-frame" src="" allowfullscreen></iframe>
+    <iframe id="video-iframe" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
     const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
-    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
+    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; // Your Monetization Link
+    let curId = ""; let curType = "";
 
-    async function loadData(url, gridId) {
+    // --- HARD-CODED GLOBAL DATABASE (INSTANT LOAD) ---
+    const db = {
+        trending: [
+            { id: 'tt27712166', t: 'Dhurandhar', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie' },
+            { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie' },
+            { id: 'tt11389802', t: 'Stree 2', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie' },
+            { id: 'tt15239678', t: 'Dune: Messiah', i: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg', type: 'movie' },
+            { id: 'tt13751694', t: 'Animal (Uncut)', i: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg', type: 'movie' }
+        ],
+        adult: [
+            { id: 'tt10837166', t: '365 Days', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie' },
+            { id: 'tt8772262', t: 'Euphoria (Hot)', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv' },
+            { id: 'tt13008596', t: 'Elite (18+)', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+            { id: 'tt11126994', t: 'Sex/Life', i: '/8mS2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+            { id: 'tt14671660', t: 'Obsession', i: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg', type: 'movie' }
+        ],
+        series: [
+            { id: 'tt6468322', t: 'Money Heist', i: '/reEMJA1uzpG3SZ0KGbnQn76vQ4l.jpg', type: 'tv' },
+            { id: 'tt14715170', t: 'Squid Game 2', i: '/dDlE6_BslXWbi0er9vDnkp9iGv5.jpg', type: 'tv' },
+            { id: 'tt0944947', t: 'Game of Thrones', i: '/7WsyChvRStvT0tOFRunAURE3nE6.jpg', type: 'tv' },
+            { id: 'tt1877514', t: 'The Boys', i: '/stKG9ebYreEBubkBhD7Gr3mcMp6.jpg', type: 'tv' }
+        ]
+    };
+
+    function render(data, gridId) {
         const grid = document.getElementById(gridId);
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            data.results.forEach(m => {
-                if(m.poster_path) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.onclick = () => playMovie(m.id, m.media_type || (gridId === 'series-grid' ? 'tv' : 'movie'), m.title || m.name);
-                    card.innerHTML = `<div class="badge">4K</div><img src="${PROXY + m.poster_path}" loading="lazy">`;
-                    grid.appendChild(card);
-                }
-            });
-        } catch(e) { console.log("Connection Busy"); }
+        data.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openT(m.id, m.type, m.t);
+            card.innerHTML = `<div class="badge">4K</div><img src="${PROXY + m.i}" onerror="this.src='https://via.placeholder.com/200x300?text=${m.t}'"><div class="card-name">${m.t}</div>`;
+            grid.appendChild(card);
+        });
     }
 
-    function searchGlobal() {
-        const q = document.getElementById('query').value;
-        if(q.length < 2) return;
-        document.getElementById('search-grid').innerHTML = "";
-        document.getElementById('search-row').style.display = "block";
-        loadData(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-grid');
-        window.scrollTo({top: 300, behavior: 'smooth'});
+    function openT(id, type, name) {
+        curId = id; curType = type;
+        window.open(ADS, '_blank'); // Open Ad in background tab
+        document.getElementById('playing-title').innerText = "STREAMING: " + name;
+        document.getElementById('theater').style.display = "block";
+        changeS(1);
     }
 
-    function playMovie(id, type, name) {
-        // EARNINGS: Ad opens in BACKGROUND TAB
-        window.open(ADS, '_blank'); 
-        
-        // MOVIE: Starts immediately in original page
-        const theater = document.getElementById('theater');
-        const frame = document.getElementById('video-frame');
-        document.getElementById('playing-title').innerText = "NOW STREAMING: " + name;
-        
-        // Using 'vidsrc.me' for highest stability in India/US
-        frame.src = type === 'tv' ? `https://vidsrc.me/embed/tv?imdb=${id}` : `https://vidsrc.me/embed/movie?imdb=${id}`;
-        theater.style.display = "block";
+    function changeS(s) {
+        const f = document.getElementById('video-iframe');
+        // Hybrid Server Logic
+        let url = (s === 1) 
+            ? (curType === 'tv' ? `https://vidsrc.me/embed/tv?imdb=${curId}` : `https://vidsrc.me/embed/movie?imdb=${curId}`)
+            : (curType === 'tv' ? `https://vidsrc.pm/embed/tv/${curId}` : `https://vidsrc.pm/embed/movie/${curId}`);
+        f.src = url;
     }
 
     function closeT() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('video-frame').src = "";
+        document.getElementById('video-iframe').src = "";
     }
 
     window.onload = () => {
-        loadData(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`, 'trending-grid');
-        loadData(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'hot-grid');
-        loadData(`https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`, 'series-grid');
+        render(db.trending, 'trending-grid');
+        render(db.adult, 'adult-grid');
+        render(db.series, 'series-grid');
     };
 </script>
 
