@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Global Premium</title>
+    <title>SPk ULTIMATE - Global 4K Netflix Pro</title>
     <style>
-        :root { --red: #E50914; --black: #050505; }
-        body { background: var(--black); color: white; font-family: 'Helvetica Neue', Arial; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --red: #E50914; --black: #050505; --gray: #141414; }
+        body { background: var(--black); color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* Premium Nav */
-        nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); position: fixed; width: 100%; z-index: 1000; box-sizing: border-box; }
-        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; text-decoration: none; letter-spacing: 2px; }
+        /* Glass-morphism Premium Nav */
+        nav { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 1px solid #333; box-sizing: border-box; backdrop-filter: blur(10px); }
+        .logo { color: var(--red); font-size: 2.2rem; font-weight: 900; letter-spacing: 3px; text-decoration: none; text-shadow: 0 0 15px var(--red); }
 
-        /* Netflix Hero */
-        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.2), var(--black)), url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bca1-07e3f8eb14b4/web/IN-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg'); background-size: cover; padding: 0 10%; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .search-container { display: flex; width: 100%; max-width: 600px; background: white; border-radius: 4px; overflow: hidden; margin-top: 20px; }
-        #s-input { flex: 1; padding: 15px; border: none; outline: none; font-size: 1rem; color: black; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 25px; font-weight: bold; cursor: pointer; }
+        /* Search Hero Section */
+        .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #1a1a1a, #050505); }
+        .search-engine { display: flex; max-width: 800px; margin: 20px auto; background: rgba(255,255,255,0.1); border-radius: 50px; overflow: hidden; border: 1px solid #444; }
+        #query { flex: 1; padding: 15px 25px; border: none; background: transparent; color: white; outline: none; font-size: 1.1rem; }
+        .s-btn { background: var(--red); color: white; border: none; padding: 0 40px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .s-btn:hover { background: white; color: var(--red); }
 
-        /* Content Rows */
-        .row { padding: 20px 0 0 5%; margin-top: -50px; position: relative; z-index: 10; }
-        .row h2 { font-size: 1.4rem; margin-bottom: 15px; }
-        .rail { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scrollbar-width: none; }
+        /* Dynamic Netflix Rows */
+        .row { padding: 30px 0 0 5%; }
+        .row h2 { font-size: 1.6rem; margin-bottom: 20px; border-left: 6px solid var(--red); padding-left: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
+        .rail { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 40px; scrollbar-width: none; }
         .rail::-webkit-scrollbar { display: none; }
         
-        /* Movie Cards */
-        .card { flex: 0 0 160px; height: 240px; background: #141414; border-radius: 4px; overflow: hidden; transition: 0.4s; cursor: pointer; position: relative; border: 1px solid #333; }
-        .card:hover { transform: scale(1.1); z-index: 100; border-color: white; }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-        .badge { position: absolute; top: 10px; left: 0; background: var(--red); font-size: 0.6rem; padding: 2px 8px; font-weight: bold; }
+        /* Russia-Style Premium Cards */
+        .card { flex: 0 0 180px; height: 270px; background: var(--gray); border-radius: 10px; overflow: hidden; border: 1px solid #222; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.15) translateY(-10px); z-index: 100; border-color: var(--red); box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .card img { width: 100%; height: 100%; object-fit: cover; background: #111; transition: 0.3s; }
+        .card:hover img { opacity: 0.6; }
+        .card-info { position: absolute; bottom: 0; width: 100%; padding: 20px 10px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); font-size: 0.85rem; text-align: center; font-weight: bold; transform: translateY(20px); transition: 0.3s; opacity: 0; }
+        .card:hover .card-info { transform: translateY(0); opacity: 1; }
+        .badge { position: absolute; top: 12px; left: 0; background: var(--red); font-size: 0.65rem; padding: 4px 10px; font-weight: bold; border-radius: 0 5px 5px 0; box-shadow: 2px 2px 10px #000; }
 
-        /* Pro Player Theater */
+        /* Global Theater (Pro Player) */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); z-index: 10001; box-sizing: border-box; }
-        .close-btn { background: var(--red); color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-        .server-box { display: flex; gap: 10px; margin-top: 5px; }
-        .s-btn-mini { background: #333; color: white; border: 1px solid #555; padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
-        .s-btn-mini:hover { background: var(--red); }
+        .t-header { position: absolute; top: 0; width: 100%; padding: 25px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(rgba(0,0,0,0.95), transparent); z-index: 10001; box-sizing: border-box; }
+        .exit-btn { background: var(--red); color: white; border: none; padding: 12px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 0 20px var(--red); }
+        .server-wrap { display: flex; gap: 12px; margin-top: 8px; }
+        .pill { background: #333; color: white; border: 1px solid #555; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .pill.active { background: var(--red); border-color: var(--red); }
         iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
     </style>
 </head>
@@ -46,101 +49,117 @@
 <nav><a href="#" class="logo">SPk ULTIMATE</a></nav>
 
 <div class="hero">
-    <h1>Unlimited 18+, Movies & Series</h1>
-    <div class="search-container">
-        <input type="text" id="s-input" placeholder="Search Netflix, 18+ & Global Hits...">
-        <button class="s-btn" onclick="startSearch()">SEARCH</button>
+    <h1 style="font-size: 3rem; text-shadow: 2px 2px 10px #000;">Global 18+, Movies & Series</h1>
+    <div class="search-engine">
+        <input type="text" id="query" placeholder="Explore 1,000,000+ Worldwide Content...">
+        <button class="s-btn" onclick="runGlobalSearch()">Explore</button>
     </div>
 </div>
 
-<div class="row" id="search-row" style="display:none;">
-    <h2 style="color: var(--red);">Search Results</h2>
-    <div class="rail" id="search-rail"></div>
-</div>
+<div class="container">
+    <div class="row" id="s-row" style="display:none;"><h2 style="color: var(--red);">Search Results</h2><div class="rail" id="s-rail"></div></div>
+    
+    <div class="row">
+        <h2 style="color: #ff4d4d;">🔞 Hot & Adult Worldwide (18+)</h2>
+        <div class="rail" id="hot-rail"></div>
+    </div>
 
-<div class="row">
-    <h2 style="color: #ff4d4d;">🔞 Hot & Adult Special (18+)</h2>
-    <div class="rail" id="adult-rail"></div>
-</div>
+    <div class="row">
+        <h2 style="color: gold;">🌍 Trending Blockbusters</h2>
+        <div class="rail" id="trending-rail"></div>
+    </div>
 
-<div class="row">
-    <h2 style="color: gold;">🌍 Trending Blockbusters</h2>
-    <div class="rail" id="movie-rail"></div>
+    <div class="row">
+        <h2>📺 Top Global Web Series</h2>
+        <div class="rail" id="tv-rail"></div>
+    </div>
 </div>
 
 <div id="theater">
     <div class="t-header">
         <div>
-            <span id="playing-title" style="font-weight: 900; color: var(--red);">STREAMING 4K UHD</span>
-            <div class="server-box">
-                <button class="s-btn-mini" onclick="changeS(1)">Server 1</button>
-                <button class="s-btn-mini" onclick="changeS(2)">Server 2</button>
+            <span id="p-title" style="font-weight: 900; color: var(--red); font-size: 1.2rem; text-transform: uppercase;">4K ULTRA HD STREAMING</span>
+            <div class="server-wrap">
+                <button class="pill active" id="p1" onclick="switchRoute(1)">SERVER 1</button>
+                <button class="pill" id="p2" onclick="switchRoute(2)">SERVER 2</button>
+                <button class="pill" id="p3" onclick="switchRoute(3)">SERVER 3</button>
             </div>
         </div>
-        <button class="close-btn" onclick="closeT()">✕ EXIT</button>
+        <button class="exit-btn" onclick="closeCinema()">✕ EXIT</button>
     </div>
-    <iframe id="v-frame" src="" allowfullscreen></iframe>
+    <iframe id="video-engine" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const P = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
-    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
-    let curID = ""; let curTYP = "";
+    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
+    const IMAGE_TUNNEL = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
+    const AD_LINK = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
+    let activeID = ""; let activeTYP = "";
 
-    // --- HARD-CODED GLOBAL DATABASE (NO API NEEDED) ---
-    const database = [
-        { id: 'tt10837166', t: '365 Days', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie', cat: 'adult' },
-        { id: 'tt8772262', t: 'Euphoria', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv', cat: 'adult' },
-        { id: 'tt13008596', t: 'Elite', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv', cat: 'adult' },
-        { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie', cat: 'movie' },
-        { id: 'tt11389802', t: 'Stree 2', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie', cat: 'movie' },
-        { id: 'tt27712166', t: 'Dhurandhar', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie', cat: 'movie' }
-    ];
-
-    function render(data, gridId) {
-        const grid = document.getElementById(gridId);
-        grid.innerHTML = "";
-        data.forEach(m => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => openT(m.id, m.type, m.t);
-            card.innerHTML = `<div class="badge">TOP 10</div><img src="${P + m.i}" onerror="this.src='https://via.placeholder.com/200x300/E50914/FFFFFF?text=${m.t}'"><div style="position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.7);padding:5px;font-size:0.7rem;text-align:center;">${m.t}</div>`;
-            grid.appendChild(card);
-        });
+    // Automation: This function injects thousands of movies into your site automatically
+    async function injectContent(url, railId) {
+        const rail = document.getElementById(railId);
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            data.results.forEach(m => {
+                if(m.poster_path) {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.onclick = () => launchCinema(m.id, m.media_type || (railId==='tv-rail'?'tv':'movie'), m.title || m.name);
+                    card.innerHTML = `
+                        <div class="badge">TOP 10</div>
+                        <img src="${IMAGE_TUNNEL + m.poster_path}" loading="lazy">
+                        <div class="card-info">${m.title || m.name}</div>
+                    `;
+                    rail.appendChild(card);
+                }
+            });
+        } catch(e) { console.log("Engine Refreshing..."); }
     }
 
-    function startSearch() {
-        const q = document.getElementById('s-input').value.toLowerCase();
-        if(!q) return;
-        const res = database.filter(m => m.t.toLowerCase().includes(q));
-        document.getElementById('search-row').style.display = "block";
-        render(res, 'search-rail');
+    function runGlobalSearch() {
+        const q = document.getElementById('query').value;
+        if(q.length < 2) return;
+        const rail = document.getElementById('s-rail');
+        rail.innerHTML = "";
+        document.getElementById('s-row').style.display = "block";
+        injectContent(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 's-rail');
         window.scrollTo({top: 400, behavior: 'smooth'});
     }
 
-    function openT(id, type, name) {
-        window.open(ADS, '_blank'); 
-        curID = id; curTYP = type;
-        document.getElementById('playing-title').innerText = name;
+    function launchCinema(id, type, name) {
+        window.open(AD_LINK, '_blank'); // Instant profit
+        activeID = id; activeTYP = type;
+        document.getElementById('p-title').innerText = "PLAYING: " + name;
         document.getElementById('theater').style.display = "block";
-        changeS(1);
+        switchRoute(1);
     }
 
-    function changeS(s) {
-        const f = document.getElementById('v-frame');
-        // India-Stable Servers
-        let base = (s === 1) ? `https://vidsrc.xyz/embed/` : `https://vidsrc.me/embed/`;
-        f.src = base + (curTYP === 'tv' ? `tv?imdb=${curID}` : `movie?imdb=${curID}`);
+    function switchRoute(s) {
+        const engine = document.getElementById('video-engine');
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        document.getElementById('p' + s).classList.add('active');
+        
+        // Multi-Layer Failover System
+        let base = "";
+        if(s === 1) base = `https://vidsrc.cc/v2/embed/`;
+        if(s === 2) base = `https://vidsrc.pro/embed/`;
+        if(s === 3) base = `https://vidsrc.me/embed/`;
+
+        engine.src = base + (activeTYP === 'tv' ? `tv/${activeID}` : `movie/${activeID}`);
     }
 
-    function closeT() {
+    function closeCinema() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('v-frame').src = "";
+        document.getElementById('video-engine').src = "";
     }
 
     window.onload = () => {
-        render(database.filter(m => m.cat === 'adult'), 'adult-rail');
-        render(database.filter(m => m.cat === 'movie'), 'movie-rail');
+        // Automation: Pulling thousands of 18+, Trending and TV content globally
+        injectContent(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'hot-rail');
+        injectContent(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'trending-rail');
+        injectContent(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`, 'tv-rail');
     };
 </script>
 
