@@ -3,65 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Global Cinema Mirror</title>
+    <title>SPk ULTIMATE - Global Billionaire Cinema</title>
     <style>
-        :root { --netflix-red: #E50914; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --red: #E50914; --bg: #050505; --card: #181818; }
+        body { background: var(--bg); color: white; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* Premium Global Header */
-        header { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 1px solid #333; }
-        .logo { color: var(--netflix-red); font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; }
+        /* Netflix Elite Header */
+        header { background: rgba(0,0,0,0.9); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 2px solid var(--red); box-sizing: border-box; }
+        .logo { color: var(--red); font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 15px var(--red); }
 
-        /* Search & Hero */
+        /* Advanced Search Engine */
         .hero { padding: 120px 5% 40px; text-align: center; background: linear-gradient(to bottom, #141414, #050505); }
-        .search-engine { display: flex; max-width: 800px; margin: 20px auto; background: #222; border-radius: 50px; border: 1px solid #444; overflow: hidden; }
-        #s-query { flex: 1; padding: 16px 25px; border: none; background: transparent; color: white; outline: none; font-size: 1.1rem; }
-        .s-go { background: var(--netflix-red); color: white; border: none; padding: 0 40px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .search-engine { display: flex; max-width: 800px; margin: 20px auto; background: #222; border-radius: 50px; border: 1px solid #444; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #s-query { flex: 1; padding: 18px 25px; border: none; background: transparent; color: white; outline: none; font-size: 1.1rem; }
+        .s-go { background: var(--red); color: white; border: none; padding: 0 40px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .s-go:hover { background: white; color: var(--red); }
 
-        /* Netflix Rows */
+        /* Premium Horizontal Rails */
         .row { padding: 30px 0 0 5%; }
-        .row h2 { font-size: 1.5rem; margin-bottom: 18px; border-left: 6px solid var(--netflix-red); padding-left: 15px; }
-        .rail { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 40px; scrollbar-width: none; }
+        .row h2 { font-size: 1.6rem; margin-bottom: 20px; border-left: 6px solid var(--red); padding-left: 15px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .rail { display: flex; overflow-x: auto; gap: 18px; padding-bottom: 40px; scrollbar-width: none; }
         .rail::-webkit-scrollbar { display: none; }
         
-        /* Advanced Card Design */
-        .card { flex: 0 0 180px; height: 270px; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #222; transition: 0.4s; cursor: pointer; position: relative; }
-        .card:hover { transform: scale(1.15); z-index: 100; border-color: white; box-shadow: 0 15px 50px rgba(0,0,0,0.9); }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 15px 5px 5px; font-size: 0.8rem; text-align: center; font-weight: bold; }
-        .badge { position: absolute; top: 10px; right: 10px; background: var(--netflix-red); font-size: 0.6rem; padding: 3px 8px; font-weight: bold; border-radius: 3px; }
+        /* High-End Card Design */
+        .card { flex: 0 0 180px; height: 270px; background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid #222; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.15) translateY(-10px); z-index: 100; border-color: white; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .card:hover img { opacity: 0.7; }
+        .card-info { position: absolute; bottom: 0; width: 100%; padding: 20px 10px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); font-size: 0.85rem; text-align: center; font-weight: bold; opacity: 0; transition: 0.3s; }
+        .card:hover .card-info { opacity: 1; }
+        .badge { position: absolute; top: 12px; right: 12px; background: var(--red); font-size: 0.65rem; padding: 4px 10px; font-weight: bold; border-radius: 4px; box-shadow: 0 0 10px #000; }
 
-        /* Cinema Theater (Bypass Mode) */
+        /* Advanced Cinema Theater */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
         .t-nav { position: absolute; top: 0; width: 100%; padding: 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 10001; box-sizing: border-box; }
-        .exit-btn { background: var(--netflix-red); color: white; border: none; padding: 12px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; }
-        iframe { width: 100%; height: 100%; border: none; padding-top: 50px; box-sizing: border-box; }
+        .exit-btn { background: var(--red); color: white; border: none; padding: 12px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 0 20px var(--red); }
+        .server-wrap { display: flex; gap: 12px; margin-top: 8px; }
+        .s-opt { background: #333; color: white; border: 1px solid #555; padding: 6px 18px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
+        .s-opt.active { background: var(--red); border-color: var(--red); }
+        iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<header><a href="#" class="logo" onclick="location.reload()">SPk ULTIMATE</a></header>
+<header><a href="#" class="logo">SPk ULTIMATE</a></header>
 
 <div class="hero">
-    <h1 style="font-size: 2.8rem; margin-bottom: 10px;">World's Largest Cinema Mirror</h1>
+    <h1 style="font-size: 3rem; text-shadow: 2px 2px 10px #000;">The Global Billionaire Cinema</h1>
     <div class="search-engine">
-        <input type="text" id="s-query" placeholder="Search 1 Million+ Movies, Webseries & 18+...">
-        <button class="s-go" onclick="runSearch()">Explore</button>
+        <input type="text" id="s-query" placeholder="Search 1,000,000+ Movies, 18+, Webseries Worldwide...">
+        <button class="s-go" onclick="runSearch()">Get Started</button>
     </div>
 </div>
 
 <div class="content">
-    <div class="row" id="search-row" style="display:none;"><h2>Search Results</h2><div class="rail" id="search-rail"></div></div>
+    <div class="row" id="s-row" style="display:none;"><h2>Search Results</h2><div class="rail" id="s-rail"></div></div>
     
-    <div class="row"><h2>🔞 Hot & Adult Worldwide (18+)</h2><div class="rail" id="hot-rail"></div></div>
-    <div class="row"><h2>🌍 Global Trending (Netflix/HBO)</h2><div class="rail" id="trending-rail"></div></div>
-    <div class="row"><h2>📺 Premium Web Series</h2><div class="rail" id="tv-rail"></div></div>
+    <div class="row">
+        <h2 style="color: #ff4d4d;">🔞 Global Hot & Adult (18+)</h2>
+        <div class="rail" id="adult-rail"></div>
+    </div>
+
+    <div class="row">
+        <h2 style="color: gold;">🌍 Trending Blockbusters</h2>
+        <div class="rail" id="movie-rail"></div>
+    </div>
+
+    <div class="row">
+        <h2>📺 Premium Global Series</h2>
+        <div class="rail" id="tv-rail"></div>
+    </div>
 </div>
 
 <div id="theater">
     <div class="t-nav">
         <div>
-            <span id="playing-title" style="font-weight: 900; color: var(--netflix-red); font-size: 1.1rem; text-transform: uppercase;">Streaming in 4K UHD</span>
+            <span id="p-title" style="font-weight: 900; color: var(--red); text-transform: uppercase;">4K ULTRA HD STREAMING</span>
+            <div class="server-wrap">
+                <button class="s-opt active" id="b1" onclick="changeS(1)">SERVER 1</button>
+                <button class="s-opt" id="b2" onclick="changeS(2)">SERVER 2</button>
+            </div>
         </div>
         <button class="exit-btn" onclick="closeT()">✕ EXIT THEATER</button>
     </div>
@@ -69,13 +90,13 @@
 </div>
 
 <script>
-    // INTERNATIONAL SYSTEM: Multiple API Fallbacks
     const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
+    // ADVANCED: Global Image Proxying for 100% Poster Visibility
     const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
     const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
     let activeID = ""; let activeTYP = "";
 
-    async function injectGlobal(url, railId) {
+    async function injectGlobalContent(url, railId) {
         const rail = document.getElementById(railId);
         try {
             const res = await fetch(url);
@@ -84,12 +105,12 @@
                 if(m.poster_path) {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    card.onclick = () => play(m.id, m.media_type || (railId==='tv-rail'?'tv':'movie'), m.title || m.name);
+                    card.onclick = () => launch(m.id, m.media_type || (railId==='tv-rail'?'tv':'movie'), m.title || m.name);
                     card.innerHTML = `<div class="badge">4K</div><img src="${PROXY + m.poster_path}" loading="lazy"><div class="card-info">${m.title || m.name}</div>`;
                     rail.appendChild(card);
                 }
             });
-        } catch(e) { console.log("Mirror Switching..."); }
+        } catch(e) { console.log("System Tuning..."); }
     }
 
     function runSearch() {
@@ -98,19 +119,26 @@
         const rail = document.getElementById('search-rail');
         rail.innerHTML = "";
         document.getElementById('search-row').style.display = "block";
-        injectGlobal(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-rail');
+        injectGlobalContent(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-rail');
         window.scrollTo({top: 400, behavior: 'smooth'});
     }
 
-    function play(id, type, name) {
-        window.open(ADS, '_blank'); // Earning Start
+    function launch(id, type, name) {
+        window.open(ADS, '_blank'); // Dollar revenue
         activeID = id; activeTYP = type;
-        document.getElementById('playing-title').innerText = "PLAYING: " + name;
+        document.getElementById('p-title').innerText = "PLAYING: " + name;
         document.getElementById('theater').style.display = "block";
+        changeS(1);
+    }
+
+    function changeS(s) {
+        const frame = document.getElementById('v-frame');
+        document.querySelectorAll('.s-opt').forEach(b => b.classList.remove('active'));
+        document.getElementById('b' + s).classList.add('active');
         
-        // INTERNATIONAL BYPASS: VidSrc PRO (Highest Speed & Global Stability)
-        // He technology ISP (Jio/Airtel) la cross karun movie play karte.
-        document.getElementById('v-frame').src = `https://vidsrc.pro/embed/${activeTYP}/${activeID}`;
+        // TECHNOLOGY: High-Speed Russia/Global Mirror Servers
+        let base = (s === 1) ? `https://vidsrc.pro/embed/` : `https://vidsrc.me/embed/`;
+        frame.src = base + (activeTYP === 'tv' ? `tv/${activeID}` : `movie/${activeID}`);
     }
 
     function closeT() {
@@ -119,11 +147,11 @@
     }
 
     window.onload = () => {
-        injectGlobal(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'hot-rail');
-        injectGlobal(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'trending-rail');
-        injectGlobal(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`, 'tv-rail');
+        // Automation: Pulling 1000+ worldwide content instantly
+        injectGlobalContent(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'adult-rail');
+        injectGlobalContent(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'movie-rail');
+        injectGlobalContent(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`, 'tv-rail');
     };
 </script>
-
 </body>
 </html>
