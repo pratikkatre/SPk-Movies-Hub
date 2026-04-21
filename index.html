@@ -3,66 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - 4K Premium</title>
+    <title>SPk ULTIMATE - Premium 4K Global</title>
     <style>
-        :root { --red: #E50914; --black: #050505; }
-        body { font-family: 'Arial', sans-serif; background: var(--black); color: white; margin: 0; padding: 0; text-align: center; }
-        nav { background: #000; padding: 15px; border-bottom: 2px solid var(--red); color: var(--red); font-size: 1.5rem; font-weight: 900; position: sticky; top: 0; z-index: 1000; }
-        .row { padding: 25px 5%; text-align: left; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .card { background: #111; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { transform: scale(1.05); border-color: var(--red); }
-        .card img { width: 100%; height: 210px; object-fit: cover; }
-        .card-name { padding: 8px; font-size: 0.8rem; text-align: center; font-weight: bold; }
+        :root { --red: #E50914; --black: #050505; --gray: #1a1a1a; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* Fixed Theater Mode */
+        /* Premium Header */
+        header { background: rgba(0,0,0,0.95); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 2px solid var(--red); box-sizing: border-box; }
+        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; }
+        .premium-tag { background: gold; color: black; font-size: 0.7rem; padding: 2px 8px; font-weight: bold; border-radius: 4px; }
+
+        /* Content Rows */
+        .main-content { padding-top: 100px; }
+        .row { padding: 25px 5% 0; text-align: left; }
+        .row h2 { font-size: 1.4rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 20px; text-transform: uppercase; color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+        
+        /* Movie Cards */
+        .card { background: var(--gray); border-radius: 10px; overflow: hidden; border: 1px solid #333; transition: 0.4s; cursor: pointer; position: relative; }
+        .card:hover { transform: scale(1.1); border-color: var(--red); z-index: 100; box-shadow: 0 10px 40px #000; }
+        .card img { width: 100%; height: 230px; object-fit: cover; background: #222; }
+        .card-name { padding: 12px; font-size: 0.8rem; text-align: center; font-weight: bold; min-height: 40px; }
+        .badge { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.6rem; padding: 3px 8px; font-weight: bold; border-radius: 4px; }
+
+        /* The Theater Player */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .t-controls { position: absolute; top: 10px; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; box-sizing: border-box; z-index: 10001; }
-        .btn { background: var(--red); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .server-btn { background: #333; margin-left: 5px; }
-        iframe { width: 100%; height: 100%; border: none; }
+        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; background: linear-gradient(rgba(0,0,0,0.95), transparent); z-index: 10001; }
+        .close-btn { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .server-switcher { display: flex; gap: 10px; margin-top: 10px; }
+        .s-btn { background: #333; color: white; border: 1px solid #555; padding: 6px 15px; border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: 0.3s; }
+        .s-btn:hover, .s-btn.active { background: var(--red); border-color: var(--red); }
+        
+        iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<nav>SPk ULTIMATE</nav>
+<header>
+    <a href="#" class="logo">SPk ULTIMATE</a>
+    <div class="premium-tag">PREMIUM 4K</div>
+</header>
 
-<div class="row">
-    <h2>🔥 GLOBAL TRENDING</h2>
-    <div class="grid" id="trending-grid"></div>
-</div>
+<div class="main-content">
+    <div class="row">
+        <h2>🔥 WORLDWIDE TRENDING</h2>
+        <div class="grid" id="trending-grid"></div>
+    </div>
 
-<div class="row">
-    <h2 style="color: #ff4d4d;">🔞 PREMIUM 18+</h2>
-    <div class="grid" id="adult-grid"></div>
+    <div class="row">
+        <h2 style="color: #ff4d4d;">🔞 HOT & ADULT (18+)</h2>
+        <div class="grid" id="hot-grid"></div>
+    </div>
 </div>
 
 <div id="theater">
-    <div class="t-controls">
+    <div class="t-header">
         <div>
-            <button class="btn server-btn" onclick="switchS(1)">Server 1</button>
-            <button class="btn server-btn" onclick="switchS(2)">Server 2</button>
+            <span id="playing-title" style="font-weight: 900; color: var(--red); text-transform: uppercase;">STREAMING UHD</span>
+            <div class="server-switcher">
+                <button class="s-btn active" id="btn1" onclick="changeS(1)">SERVER 1</button>
+                <button class="s-btn" id="btn2" onclick="changeS(2)">SERVER 2</button>
+                <button class="s-btn" id="btn3" onclick="changeS(3)">SERVER 3</button>
+            </div>
         </div>
-        <button class="btn" onclick="closeT()">✕ CLOSE</button>
+        <button class="close-btn" onclick="closeT()">✕ EXIT THEATER</button>
     </div>
-    <iframe id="video-frame" src="" allowfullscreen></iframe>
+    <iframe id="video-iframe" src="" allowfullscreen></iframe>
 </div>
 
 <script>
     const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
-    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244";
+    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
     let currentIMDB = ""; let currentType = "";
 
-    const movies = {
+    const database = {
         trending: [
-            { id: 'tt16539488', t: 'Godzilla x Kong', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie' },
+            { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie' },
             { id: 'tt11389802', t: 'Stree 2', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie' },
-            { id: 'tt15239678', t: 'Dune 2', i: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg', type: 'movie' }
+            { id: 'tt15239678', t: 'Dune: Messiah', i: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg', type: 'movie' },
+            { id: 'tt27712166', t: 'Dhurandhar', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie' }
         ],
-        adult: [
+        hot: [
             { id: 'tt10837166', t: '365 Days', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie' },
             { id: 'tt8772262', t: 'Euphoria', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv' },
-            { id: 'tt13008596', t: 'Elite', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' }
+            { id: 'tt13008596', t: 'Elite', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+            { id: 'tt13751694', t: 'Animal (Uncut)', i: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg', type: 'movie' }
         ]
     };
 
@@ -71,34 +96,42 @@
         data.forEach(m => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.onclick = () => openT(m.id, m.type);
-            card.innerHTML = `<img src="${PROXY + m.i}"><div class="card-name">${m.t}</div>`;
+            card.onclick = () => openT(m.id, m.type, m.t);
+            card.innerHTML = `<div class="badge">4K</div><img src="${PROXY + m.i}"><div class="card-name">${m.t}</div>`;
             grid.appendChild(card);
         });
     }
 
-    function openT(id, type) {
+    function openT(id, type, name) {
         currentIMDB = id; currentType = type;
-        // THE TRICK: Open ad in a new tab so your site stays open!
-        window.open(ADS, '_blank');
-        
+        window.open(ADS, '_blank'); // Open ad in background tab
+        document.getElementById('playing-title').innerText = "PLAYING: " + name;
         document.getElementById('theater').style.display = "block";
-        switchS(1);
+        changeS(1);
     }
 
-    function switchS(s) {
-        const f = document.getElementById('video-frame');
-        // Use vidsrc.xyz or vidsrc.pro for higher reliability in India
-        let base = (s === 1) ? `https://vidsrc.xyz/embed/` : `https://vidsrc.pro/embed/`;
-        f.src = base + (currentType === 'tv' ? `tv?imdb=${currentIMDB}` : `movie?imdb=${currentIMDB}`);
+    function changeS(s) {
+        const f = document.getElementById('video-iframe');
+        // Reset all buttons
+        document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn' + s).classList.add('active');
+
+        // MULTI-SERVER TUNNEL (One of these WILL work in India)
+        let url = "";
+        if(s === 1) url = (currentType === 'tv') ? `https://vidsrc.xyz/embed/tv?imdb=${currentIMDB}` : `https://vidsrc.xyz/embed/movie?imdb=${currentIMDB}`;
+        if(s === 2) url = (currentType === 'tv') ? `https://vidsrc.me/embed/tv?imdb=${currentIMDB}` : `https://vidsrc.me/embed/movie?imdb=${currentIMDB}`;
+        if(s === 3) url = (currentType === 'tv') ? `https://vidsrc.pm/embed/tv/${currentIMDB}` : `https://vidsrc.pm/embed/movie/${currentIMDB}`;
+        
+        f.src = url;
     }
 
     function closeT() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('video-frame').src = "";
+        document.getElementById('video-iframe').src = "";
     }
 
-    window.onload = () => { render(movies.trending, 'trending-grid'); render(movies.adult, 'adult-grid'); };
+    window.onload = () => { render(database.trending, 'trending-grid'); render(database.hot, 'hot-grid'); };
 </script>
+
 </body>
 </html>
