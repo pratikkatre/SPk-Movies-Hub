@@ -3,296 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - Global 4K Streaming</title>
+    <title>SPk ULTIMATE - Global Premium</title>
     <style>
-        :root { --red: #E50914; --black: #050505; --dark-gray: #141414; --hover-scale: 1.15; }
+        :root { --red: #E50914; --black: #050505; }
+        body { background: var(--black); color: white; font-family: 'Helvetica Neue', Arial; margin: 0; padding: 0; overflow-x: hidden; }
         
-        body { 
-            background-color: var(--black); 
-            color: #fff; 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+        /* Premium Nav */
+        nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); position: fixed; width: 100%; z-index: 1000; box-sizing: border-box; }
+        .logo { color: var(--red); font-size: 1.8rem; font-weight: 900; text-decoration: none; letter-spacing: 2px; }
 
-        /* Netflix Glass-morphism Navigation */
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            height: 70px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
-            z-index: 2000;
-            transition: background 0.5s;
-            box-sizing: border-box;
-        }
+        /* Netflix Hero */
+        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.2), var(--black)), url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bca1-07e3f8eb14b4/web/IN-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg'); background-size: cover; padding: 0 10%; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .search-container { display: flex; width: 100%; max-width: 600px; background: white; border-radius: 4px; overflow: hidden; margin-top: 20px; }
+        #s-input { flex: 1; padding: 15px; border: none; outline: none; font-size: 1rem; color: black; }
+        .s-btn { background: var(--red); color: white; border: none; padding: 0 25px; font-weight: bold; cursor: pointer; }
 
-        .logo { color: var(--red); font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; }
-
-        /* Search Engine Advanced */
-        .hero-search {
-            height: 60vh;
-            background: linear-gradient(to bottom, rgba(5,5,5,0) 0%, var(--black) 100%), 
-                        url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bca1-07e3f8eb14b4/web/IN-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg');
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .search-bar {
-            display: flex;
-            width: 90%;
-            max-width: 700px;
-            background: rgba(0,0,0,0.75);
-            border: 1px solid #444;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        .search-bar input {
-            flex: 1;
-            padding: 18px;
-            border: none;
-            background: transparent;
-            color: white;
-            font-size: 1.1rem;
-            outline: none;
-        }
-
-        .search-bar button {
-            background: var(--red);
-            color: white;
-            border: none;
-            padding: 0 35px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        /* Netflix Horizontal Rows */
-        .row { margin: -50px 0 30px 5%; position: relative; z-index: 10; }
-        .row-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        /* Content Rows */
+        .row { padding: 20px 0 0 5%; margin-top: -50px; position: relative; z-index: 10; }
+        .row h2 { font-size: 1.4rem; margin-bottom: 15px; }
+        .rail { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scrollbar-width: none; }
+        .rail::-webkit-scrollbar { display: none; }
         
-        .movie-rail {
-            display: flex;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            gap: 12px;
-            padding: 20px 0;
-            scrollbar-width: none; /* Firefox */
-        }
+        /* Movie Cards */
+        .card { flex: 0 0 160px; height: 240px; background: #141414; border-radius: 4px; overflow: hidden; transition: 0.4s; cursor: pointer; position: relative; border: 1px solid #333; }
+        .card:hover { transform: scale(1.1); z-index: 100; border-color: white; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 10px; left: 0; background: var(--red); font-size: 0.6rem; padding: 2px 8px; font-weight: bold; }
 
-        .movie-rail::-webkit-scrollbar { display: none; }
-
-        /* Advanced Movie Card */
-        .card {
-            flex: 0 0 200px;
-            height: 280px;
-            background: var(--dark-gray);
-            border-radius: 6px;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.45s ease, box-shadow 0.45s ease;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: scale(var(--hover-scale));
-            z-index: 100;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .card-info {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 20px 10px 10px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .card:hover .card-info { opacity: 1; }
-
-        .tag-red {
-            position: absolute;
-            top: 10px; left: 0;
-            background: var(--red);
-            padding: 4px 10px;
-            font-size: 0.7rem;
-            font-weight: 900;
-            border-radius: 0 4px 4px 0;
-        }
-
-        /* Cinema Theater (Pro Player) */
-        #theater {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            z-index: 10000;
-        }
-
-        .theater-nav {
-            position: absolute;
-            top: 0; width: 100%;
-            padding: 25px;
-            background: linear-gradient(rgba(0,0,0,0.9), transparent);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-            z-index: 10001;
-        }
-
-        .close-theater {
-            background: var(--red);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .server-pills { display: flex; gap: 10px; }
-        .pill { 
-            background: rgba(255,255,255,0.1); 
-            border: 1px solid rgba(255,255,255,0.3); 
-            color: white; padding: 8px 18px; 
-            border-radius: 20px; cursor: pointer; 
-            font-size: 0.8rem;
-        }
-        .pill.active { background: var(--red); border-color: var(--red); }
-
-        iframe { width: 100%; height: 100%; border: none; }
+        /* Pro Player Theater */
+        #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
+        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); z-index: 10001; box-sizing: border-box; }
+        .close-btn { background: var(--red); color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .server-box { display: flex; gap: 10px; margin-top: 5px; }
+        .s-btn-mini { background: #333; color: white; border: 1px solid #555; padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
+        .s-btn-mini:hover { background: var(--red); }
+        iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <nav><a href="#" class="logo">SPk ULTIMATE</a></nav>
 
-<div class="hero-search">
-    <h1 style="font-size: 3rem; margin-bottom: 10px;">Unlimited 18+, Movies & Series</h1>
-    <h2 style="font-weight: 400; margin-bottom: 30px;">Watch anywhere. Cancel never.</h2>
-    <div class="search-bar">
-        <input type="text" id="master-query" placeholder="What are you looking for?">
-        <button onclick="globalSearch()">Get Started</button>
+<div class="hero">
+    <h1>Unlimited 18+, Movies & Series</h1>
+    <div class="search-container">
+        <input type="text" id="s-input" placeholder="Search Netflix, 18+ & Global Hits...">
+        <button class="s-btn" onclick="startSearch()">SEARCH</button>
     </div>
 </div>
 
 <div class="row" id="search-row" style="display:none;">
-    <div class="row-title">Search Results</div>
-    <div class="movie-rail" id="search-rail"></div>
+    <h2 style="color: var(--red);">Search Results</h2>
+    <div class="rail" id="search-rail"></div>
 </div>
 
 <div class="row">
-    <div class="row-title">🔞 Hot & Adult Special (18+)</div>
-    <div class="movie-rail" id="adult-rail"></div>
+    <h2 style="color: #ff4d4d;">🔞 Hot & Adult Special (18+)</h2>
+    <div class="rail" id="adult-rail"></div>
 </div>
 
 <div class="row">
-    <div class="row-title">🌍 Global Trending Now</div>
-    <div class="movie-rail" id="trending-rail"></div>
+    <h2 style="color: gold;">🌍 Trending Blockbusters</h2>
+    <div class="rail" id="movie-rail"></div>
 </div>
 
 <div id="theater">
-    <div class="theater-nav">
+    <div class="t-header">
         <div>
-            <div id="playing-now" style="font-size: 1.2rem; font-weight: bold; color: var(--red);">STREAMING 4K</div>
-            <div class="server-pills">
-                <button class="pill active" id="p1" onclick="switchSystem(1)">SERVER 1</button>
-                <button class="pill" id="p2" onclick="switchSystem(2)">SERVER 2</button>
+            <span id="playing-title" style="font-weight: 900; color: var(--red);">STREAMING 4K UHD</span>
+            <div class="server-box">
+                <button class="s-btn-mini" onclick="changeS(1)">Server 1</button>
+                <button class="s-btn-mini" onclick="changeS(2)">Server 2</button>
             </div>
         </div>
-        <button class="close-theater" onclick="closeTheater()">✕ Close Player</button>
+        <button class="close-btn" onclick="closeT()">✕ EXIT</button>
     </div>
-    <iframe id="video-engine" src="" allowfullscreen></iframe>
+    <iframe id="v-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    // TECHNOLOGY: Global Image Tunneling to bypass Jio/Airtel Block
-    const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
-    const AD_LINK = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
-    const API_KEY = "844dba0bfd443a56f92d74a0d0d88b03";
+    const P = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
+    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
+    let curID = ""; let curTYP = "";
 
-    let activeID = ""; let activeTYPE = "";
+    // --- HARD-CODED GLOBAL DATABASE (NO API NEEDED) ---
+    const database = [
+        { id: 'tt10837166', t: '365 Days', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie', cat: 'adult' },
+        { id: 'tt8772262', t: 'Euphoria', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv', cat: 'adult' },
+        { id: 'tt13008596', t: 'Elite', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv', cat: 'adult' },
+        { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie', cat: 'movie' },
+        { id: 'tt11389802', t: 'Stree 2', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie', cat: 'movie' },
+        { id: 'tt27712166', t: 'Dhurandhar', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie', cat: 'movie' }
+    ];
 
-    async function fetchCinema(url, railId) {
-        const rail = document.getElementById(railId);
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            data.results.forEach(m => {
-                if(m.poster_path) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.onclick = () => launchCinema(m.id, m.media_type || (railId === 'tv-rail' ? 'tv' : 'movie'), m.title || m.name);
-                    card.innerHTML = `
-                        <div class="tag-red">TOP 10</div>
-                        <img src="${PROXY + m.poster_path}" loading="lazy">
-                        <div class="card-info"><b>${m.title || m.name}</b></div>
-                    `;
-                    rail.appendChild(card);
-                }
-            });
-        } catch(e) { console.error("Global Engine Stalled"); }
+    function render(data, gridId) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = "";
+        data.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openT(m.id, m.type, m.t);
+            card.innerHTML = `<div class="badge">TOP 10</div><img src="${P + m.i}" onerror="this.src='https://via.placeholder.com/200x300/E50914/FFFFFF?text=${m.t}'"><div style="position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.7);padding:5px;font-size:0.7rem;text-align:center;">${m.t}</div>`;
+            grid.appendChild(card);
+        });
     }
 
-    function globalSearch() {
-        const q = document.getElementById('master-query').value;
-        if(q.length < 2) return;
-        const rail = document.getElementById('search-rail');
-        rail.innerHTML = "";
+    function startSearch() {
+        const q = document.getElementById('s-input').value.toLowerCase();
+        if(!q) return;
+        const res = database.filter(m => m.t.toLowerCase().includes(q));
         document.getElementById('search-row').style.display = "block";
-        fetchCinema(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-rail');
-        window.scrollTo({top: 450, behavior: 'smooth'});
+        render(res, 'search-rail');
+        window.scrollTo({top: 400, behavior: 'smooth'});
     }
 
-    function launchCinema(id, type, name) {
-        window.open(AD_LINK, '_blank'); // Instant monetization
-        activeID = id; activeTYPE = type;
-        document.getElementById('playing-now').innerText = name;
+    function openT(id, type, name) {
+        window.open(ADS, '_blank'); 
+        curID = id; curTYP = type;
+        document.getElementById('playing-title').innerText = name;
         document.getElementById('theater').style.display = "block";
-        switchSystem(1);
+        changeS(1);
     }
 
-    function switchSystem(s) {
-        const engine = document.getElementById('video-engine');
-        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-        document.getElementById('p' + s).classList.add('active');
-
-        // TECHNOLOGY: Hybrid Failover Routing
-        // Using high-speed worldwide bypass servers
+    function changeS(s) {
+        const f = document.getElementById('v-frame');
+        // India-Stable Servers
         let base = (s === 1) ? `https://vidsrc.xyz/embed/` : `https://vidsrc.me/embed/`;
-        engine.src = base + (activeTYPE === 'tv' ? `tv?imdb=${activeID}` : `movie?imdb=${activeID}`);
+        f.src = base + (curTYP === 'tv' ? `tv?imdb=${curID}` : `movie?imdb=${curID}`);
     }
 
-    function closeTheater() {
+    function closeT() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('video-engine').src = "";
+        document.getElementById('v-frame').src = "";
     }
 
     window.onload = () => {
-        // Advanced Discovery Algorithm (Genres: 10749 for Hot, 18+ style discovery)
-        fetchCinema(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'adult-rail');
-        fetchCinema(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`, 'trending-rail');
+        render(database.filter(m => m.cat === 'adult'), 'adult-rail');
+        render(database.filter(m => m.cat === 'movie'), 'movie-rail');
     };
 </script>
 
