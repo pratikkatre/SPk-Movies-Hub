@@ -3,145 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPk ULTIMATE - 4K Premium Global</title>
+    <title>SPk ULTIMATE - Premium 4K Hub</title>
     <style>
-        :root { --red: #E50914; --black: #050505; --dark: #141414; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --red: #E50914; --black: #050505; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--black); color: white; margin: 0; padding: 0; text-align: center; }
+        nav { background: #000; padding: 15px 5%; border-bottom: 2px solid var(--red); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--red); font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; }
         
-        /* Netflix Premium Header */
-        header { background: rgba(0,0,0,0.95); padding: 15px 5%; display: flex; flex-direction: column; align-items: center; position: fixed; width: 100%; z-index: 2000; border-bottom: 2px solid var(--red); box-sizing: border-box; }
-        .top-nav { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 10px; }
-        .logo { color: var(--red); font-size: 2rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 10px var(--red); }
+        .row { padding: 30px 5% 0; text-align: left; }
+        .row h2 { font-size: 1.3rem; border-left: 5px solid var(--red); padding-left: 15px; margin-bottom: 20px; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 20px; }
         
-        /* Advanced Search Bar */
-        .search-container { display: flex; width: 100%; max-width: 800px; background: #222; border-radius: 4px; border: 1px solid #444; overflow: hidden; }
-        #s-input { flex: 1; padding: 12px; border: none; background: transparent; color: white; outline: none; font-size: 1rem; }
-        .s-btn { background: var(--red); color: white; border: none; padding: 0 25px; font-weight: bold; cursor: pointer; }
-
-        /* Grid Rows */
-        .main { padding-top: 160px; }
-        .row { padding: 20px 5% 0; }
-        .row h2 { font-size: 1.5rem; margin-bottom: 15px; border-left: 6px solid var(--red); padding-left: 15px; text-transform: uppercase; color: #fff; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 20px; }
+        .card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #333; transition: 0.3s; cursor: pointer; position: relative; height: 260px; }
+        .card:hover { transform: scale(1.05); border-color: var(--red); box-shadow: 0 0 20px var(--red); }
+        .card img { width: 100%; height: 215px; object-fit: cover; background: #222; }
+        .card-name { padding: 8px; font-size: 0.75rem; text-align: center; font-weight: bold; background: #000; height: 45px; display: flex; align-items: center; justify-content: center; }
         
-        /* Movie Cards */
-        .card { background: var(--dark); border-radius: 8px; overflow: hidden; border: 1px solid #222; transition: 0.4s; cursor: pointer; position: relative; }
-        .card:hover { transform: scale(1.1); border-color: var(--red); z-index: 100; box-shadow: 0 10px 40px #000; }
-        .card img { width: 100%; height: 240px; object-fit: cover; background: #111; }
-        .card-name { padding: 10px; font-size: 0.85rem; text-align: center; font-weight: bold; min-height: 40px; display: flex; align-items: center; justify-content: center; }
-        .tag-18 { position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 0.7rem; padding: 3px 8px; font-weight: bold; border-radius: 4px; box-shadow: 0 0 10px #000; }
-
-        /* Theater / Player */
         #theater { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 10001; box-sizing: border-box; }
-        .exit-btn { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; }
-        .server-switch { display: flex; gap: 10px; margin-top: 5px; }
-        .s-opt { background: #333; color: white; border: 1px solid #555; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
-        .s-opt:hover { background: var(--red); }
+        .t-header { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(rgba(0,0,0,0.9), transparent); z-index: 10001; box-sizing: border-box; }
+        .close-btn { background: var(--red); color: white; border: none; padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="top-nav">
-        <a href="#" class="logo" onclick="location.reload()">SPk ULTIMATE</a>
-        <span style="color: gold; font-size: 0.7rem; font-weight: bold;">4K GLOBAL UNLOCKED</span>
-    </div>
-    <div class="search-container">
-        <input type="text" id="s-input" placeholder="Search 800,000+ Movies, Webseries, 18+ Content...">
-        <button class="s-btn" onclick="runSearch()">SEARCH</button>
-    </div>
-</header>
+<nav><div class="logo">SPk ULTIMATE</div> <span style="color:gold; font-size:0.7rem; font-weight:bold;">4K UNLOCKED</span></nav>
 
-<div class="main">
-    <div class="row" id="search-row" style="display:none;">
-        <h2 style="color: var(--red);">Search Results</h2>
-        <div class="grid" id="search-grid"></div>
-    </div>
+<div class="row">
+    <h2 style="color: #ff4d4d;">🔞 HOT & ADULT SPECIAL (18+)</h2>
+    <div class="grid" id="adult-grid"></div>
+</div>
 
-    <div class="row">
-        <h2 style="color: #ff4d4d;">🔞 HOT & ADULT WORLDWIDE (18+)</h2>
-        <div class="grid" id="hot-grid"></div>
-    </div>
-
-    <div class="row">
-        <h2 style="color: gold;">🌍 GLOBAL TRENDING MOVIES</h2>
-        <div class="grid" id="main-grid"></div>
-    </div>
+<div class="row">
+    <h2 style="color: gold;">🌍 GLOBAL TRENDING MOVIES</h2>
+    <div class="grid" id="movie-grid"></div>
 </div>
 
 <div id="theater">
     <div class="t-header">
-        <div>
-            <span id="p-title" style="font-weight: 900; color: var(--red);">STREAMING ULTRA HD</span>
-            <div class="server-switch">
-                <button class="s-opt" onclick="switchServer(1)">Server 1</button>
-                <button class="s-opt" onclick="switchServer(2)">Server 2</button>
-            </div>
-        </div>
-        <button class="exit-btn" onclick="closeT()">✕ EXIT</button>
+        <span id="playing-title" style="font-weight: 900; color: var(--red);">STREAMING ULTRA HD</span>
+        <button class="close-btn" onclick="closeCinema()">✕ EXIT</button>
     </div>
-    <iframe id="v-frame" src="" allowfullscreen></iframe>
+    <iframe id="video-frame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
-    const API_KEY = '844dba0bfd443a56f92d74a0d0d88b03';
-    const PROXY = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
-    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244"; 
-    let curID = ""; let curTYPE = "";
+    const P = "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500";
+    const ADS = "https://narilyhukelpfulin.com/?2G2mF=1254244";
 
-    async function loadData(url, gridId) {
+    // --- MANUALLY FIXED DATABASE (NO API NEEDED) ---
+    const database = {
+        adult: [
+            { id: 'tt10837166', t: '365 Days', i: '/6lyBWmC6FL87zy6FF6v6XpS6y.jpg', type: 'movie' },
+            { id: 'tt8772262', t: 'Euphoria (Hot)', i: '/j9S9Z9f89N0X9Ube5y.jpg', type: 'tv' },
+            { id: 'tt13008596', t: 'Elite', i: '/37vF7S2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+            { id: 'tt11126994', t: 'Sex/Life', i: '/8mS2G1l7t0OQp8t50S8tWUX.jpg', type: 'tv' },
+            { id: 'tt13751694', t: 'Animal (Uncut)', i: '/vG9QOsl2G1l7t0OQp8t50S8tWUX.jpg', type: 'movie' }
+        ],
+        movies: [
+            { id: 'tt16539488', t: 'Godzilla x Kong 2', i: '/v9998Zst7I79z27k31Jk5t9Mv0V.jpg', type: 'movie' },
+            { id: 'tt15239678', t: 'Dune: Messiah', i: '/8uS6B0vAk96p3noCmeC6p6q9p9G.jpg', type: 'movie' },
+            { id: 'tt11389802', t: 'Stree 2', i: '/6v8yX7D9YvDIn6mP7m0I07S67pE.jpg', type: 'movie' },
+            { id: 'tt27712166', t: 'Dhurandhar', i: '/8X26ZzN87S7rK7P3f550Y8pYFzC.jpg', type: 'movie' }
+        ]
+    };
+
+    function render(list, gridId) {
         const grid = document.getElementById(gridId);
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            data.results.forEach(m => {
-                if(m.poster_path) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.onclick = () => play(m.id, m.media_type || (gridId==='tv-grid'?'tv':'movie'), m.title || m.name);
-                    card.innerHTML = `<div class="tag-18">18+</div><img src="${PROXY + m.poster_path}" loading="lazy"><div class="card-name">${m.title || m.name}</div>`;
-                    grid.appendChild(card);
-                }
-            });
-        } catch(e) { console.log("Network Busy"); }
+        list.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => playMovie(m.id, m.type, m.t);
+            card.innerHTML = `<img src="${P + m.i}" onerror="this.src='https://via.placeholder.com/200x300?text=${m.t}'"><div class="card-name">${m.t}</div>`;
+            grid.appendChild(card);
+        });
     }
 
-    function runSearch() {
-        const q = document.getElementById('s-input').value;
-        if(q.length < 2) return;
-        const grid = document.getElementById('search-grid');
-        grid.innerHTML = "";
-        document.getElementById('search-row').style.display = "block";
-        loadData(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`, 'search-grid');
-        window.scrollTo({top: 150, behavior: 'smooth'});
+    function playMovie(id, type, name) {
+        window.open(ADS, '_blank'); // Dollar earning link
+        const theater = document.getElementById('theater');
+        const frame = document.getElementById('video-frame');
+        document.getElementById('playing-title').innerText = "STREAMING: " + name;
+        
+        // India-Stable Player Server
+        frame.src = type === 'tv' ? `https://vidsrc.me/embed/tv?imdb=${id}` : `https://vidsrc.me/embed/movie?imdb=${id}`;
+        theater.style.display = "block";
     }
 
-    function play(id, type, name) {
-        window.open(ADS, '_blank'); // Dollar revenue
-        curID = id; curTYPE = type;
-        document.getElementById('p-title').innerText = "STREAMING: " + name;
-        document.getElementById('theater').style.display = "block";
-        switchServer(1);
-    }
-
-    function switchServer(s) {
-        const f = document.getElementById('v-frame');
-        let base = (s === 1) ? `https://vidsrc.me/embed/` : `https://vidsrc.xyz/embed/`;
-        f.src = base + (curTYPE === 'tv' ? `tv?imdb=${curID}` : `movie?imdb=${curID}`);
-    }
-
-    function closeT() {
+    function closeCinema() {
         document.getElementById('theater').style.display = "none";
-        document.getElementById('v-frame').src = "";
+        document.getElementById('video-frame').src = "";
     }
 
     window.onload = () => {
-        // High Traffic Adult Genres
-        loadData(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749&sort_by=popularity.desc`, 'hot-grid');
-        // Trending Global
-        loadData(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`, 'main-grid');
+        render(database.adult, 'adult-grid');
+        render(database.movies, 'movie-grid');
     };
 </script>
 
